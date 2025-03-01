@@ -1,39 +1,30 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
+import React, { useEffect } from "react";
+import { SplashScreen, Stack } from "expo-router";
+import "./global.css";
+import { useFonts } from "expo-font";
+import AppContextProvider from "@/context/AppContext";
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  const [fontLoaded] = useFonts({
+    "poppins-black": require("@/assets/fonts/Poppins-Black.ttf"),
+    "poppins-regular": require("@/assets/fonts/Poppins-Regular.ttf"),
+    "poppins-thin": require("@/assets/fonts/Poppins-Thin.ttf"),
+    "poppins-bold": require("@/assets/fonts/Poppins-ExtraBold.ttf"),
+    "poppins-semi-bold": require("@/assets/fonts/Poppins-SemiBold.ttf"),
+    "poppins-light": require("@/assets/fonts/Poppins-Light.ttf"),
+    "poppins-italic": require("@/assets/fonts/Poppins-Italic.ttf"),
   });
-
   useEffect(() => {
-    if (loaded) {
+    if (fontLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [fontLoaded]);
 
-  if (!loaded) {
+  if (!fontLoaded) {
     return null;
   }
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+      <AppContextProvider>
+       <Stack screenOptions={{headerShown:false}}/>
+      </AppContextProvider>
   );
 }

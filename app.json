@@ -34,6 +34,45 @@
         }
       ]
     ],
+    "expo-fonts": [
+      {
+        "fonts": [
+          {
+            "asset": "./assets/fonts/Poppins-Black.ttf",
+            "fontWeight": "900"
+          },
+          {
+            "asset": "./assets/fonts/Poppins-Bold.ttf",
+            "fontWeight": "700"
+          },
+          {
+            "asset": "./assets/fonts/Poppins-ExtraBold.ttf",
+            "fontWeight": "800"
+          },
+          {
+            "asset": "./assets/fonts/Poppins-Italic.ttf",
+            "fontStyle": "italic",
+            "fontWeight": "400"
+          },
+          {
+            "asset": "./assets/fonts/Poppins-Light.ttf",
+            "fontWeight": "300"
+          },
+          {
+            "asset": "./assets/fonts/Poppins-Regular.ttf",
+            "fontWeight": "400"
+          },
+          {
+            "asset": "./assets/fonts/Poppins-SemiBold.ttf",
+            "fontWeight": "600"
+          },
+          {
+            "asset": "./assets/fonts/Poppins-Thin.ttf",
+            "fontWeight": "100"
+          }
+        ]
+      }
+    ],
     "experiments": {
       "typedRoutes": true
     }
