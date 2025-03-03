@@ -1,19 +1,27 @@
-import { Link } from "expo-router";
-import { Button, Text, View } from "react-native";
+import {  FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import  { Card, } from "@/components/Cards";
+
+import { useAppContext } from "@/context/AppContext";
+import ListHeader from "@/components/ListHeader";
 
 export default function Index() {
+  const {user} = useAppContext()
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Link href={'/(stack)/filters'} asChild>
-      <Button title="go to filters"  />
-      </Link>
-      <Text  className=" text-red-500  font-poppins-bold">Edit app/index.tsx to edit this screenn.</Text>
-    </View>
+    <SafeAreaView className="bg-white h-full">
+      <FlatList
+       data={[1, 2, 3, 4]}
+       renderItem={({item})=> <Card/>}
+       keyExtractor={(item)=>item.toString()}
+       numColumns={2}
+       contentContainerClassName="pb-32"
+       columnWrapperClassName="flex gap-5 px-5"
+       showsVerticalScrollIndicator={false}
+       ListHeaderComponent={<ListHeader/>}
+       />
+     
+      
+    </SafeAreaView>
   );
 }
