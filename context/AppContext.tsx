@@ -10,7 +10,7 @@ const AppContext = createContext<{
 });
 const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const [mode, setMode] = useState<"light" | "dark">('light');
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>({username: ''});
   //  console.log(children)
     const share = {
         mode,setMode,user, setUser

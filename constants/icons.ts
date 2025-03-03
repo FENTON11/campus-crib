@@ -31,7 +31,7 @@ import swim from "@/assets/icons/swim.png";
 import wifi from "@/assets/icons/wifi.png";
 import location from "@/assets/icons/location.png";
 import edit from "@/assets/icons/edit.png";
-
+import roommate from "@/assets/icons/roommate.png";
 export default {
   google,
   home,
@@ -66,4 +66,5 @@ export default {
   wifi,
   location,
   edit,
+ roommate,
 };
