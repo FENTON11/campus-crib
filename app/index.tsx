@@ -12,9 +12,10 @@ const index = () => {
     <Redirect href='/(root)/(tabs)/home' />
   ) : (
     <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 10, gap: 5 }}>
-      <View className='h-2/3 p-1'>
+      <View className='h-1/2 p-1'>
         <Image
-          // className=' object-contain w-full h-full'
+          className=' object-cover w-full h-full'
+          resizeMode='cover'
           source={require("@/assets/images/banner.png")}
         />
       </View>
