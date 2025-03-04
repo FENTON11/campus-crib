@@ -18,6 +18,6 @@ export const appwriteConfig: appwriteConfiguration = {
     process.env.EXPO_PUBLIC_APPWRITE_REFERENCES_COLLECTION_ID
   ),
   appWritePlatform: String(
-    process.env.EXPO_PUBLIC_APPWRITE_PLATFORM_COLLECTION_ID
+    process.env.EXPO_PUBLIC_APPWRITE_PLATFORM
   ),
 };
