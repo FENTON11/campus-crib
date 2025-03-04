@@ -7,6 +7,7 @@ export type appwriteConfiguration = {
   appWritePropertyCollectionID: string;
   appWriteUsersCollectionID: string;
   appWriteAgentCollectionID: string;
+  appWriteReferencesCollectionID: string;
   appWritePlatform: string;
 };
 export interface User extends Models.Document {
