@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Controller, Control } from "react-hook-form";
 import { Picker } from "@react-native-picker/picker";
-import DateTimePicker from "@react-native-community/datetimepicker";
+// import DateTimePicker from "@react-native-community/datetimepicker";
 import { steps } from "@/constants/data";
 import { Field } from "@/typings";
 
@@ -67,15 +67,15 @@ const RenderStep: React.FC<RenderStepProps> = ({ control, stepIndex }) => {
             ))}
           </View>
         );
-      case "datePicker":
-        return (
-          <DateTimePicker
-            value={value || new Date()}
-            mode='date'
-            display='default'
-            onChange={(event, date) => onChange(date)}
-          />
-        );
+      // case "datePicker":
+      //   return (
+      //     <DateTimePicker
+      //       value={value || new Date()}
+      //       mode='date'
+      //       display='default'
+      //       onChange={(event, date) => onChange(date)}
+      //     />
+      //   );
       case "fileUpload":
         return (
           <Button

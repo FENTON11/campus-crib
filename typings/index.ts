@@ -1,6 +1,47 @@
-export interface User {
+import { Models } from "react-native-appwrite";
+export type appwriteConfiguration = {
+  appWriteEndPoint: string;
+  appWriteProject: string;
+  appWriteBucket: string;
+  appWriteDatabase: string;
+  appWritePropertyCollectionID: string;
+  appWriteUsersCollectionID: string;
+  appWriteAgentCollectionID: string;
+  appWritePlatform: string;
+};
+export interface User extends Models.Document {
   username: string;
+  email: string;
   avatar: string;
+  accountId: string;
+  favorites: string[];
+  phone: number;
+  role: "admin" | "normal" | "super_admin";
+}
+export interface Agent extends Models.Document {
+  properties: Property;
+  type: "landlord" | "agent";
+  user: User;
+}
+export interface References extends Models.Document {
+  user: User;
+  budget: number[];
+  location: string;
+  age_limit: number[];
+  year_of_study: number;
+  course: string;
+  drinking: string;
+  smoking: string;
+  emergency_contact: string;
+}
+export interface Property extends Models.Document {
+  name: string;
+  image: string;
+  description: string;
+  rating: number;
+  price: number;
+  gallery: string[];
+  agent: Agent;
 }
 
 export type Field = {
