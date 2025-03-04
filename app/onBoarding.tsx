@@ -38,7 +38,7 @@ const OnboardingScreen = () => {
       <Text className='text-2xl font-bold mb-4'>
         {steps[currentStep].label}
       </Text>
-      <RenderStep control={control} stepFields={steps[currentStep].fields} />
+      <RenderStep control={control} stepIndex={currentStep} />
       {errors && (
         <View className='mb-4'>
           {Object.keys(errors).map((field) => (

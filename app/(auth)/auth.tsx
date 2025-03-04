@@ -1,12 +1,14 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { useAppContext } from "@/context/AppContext";
-import { Redirect } from "expo-router";
+import { Redirect, useRouter } from "expo-router";
 
 const auth = () => {
   const { user } = useAppContext();
+  const router = useRouter();
   const handleSocialLogin = (provider: string) => {
-    console.log(`Logging in with ${provider}`);
+    // console.log(`Logging in with ${provider}`);
+    router.push("/onBoarding");
   };
   return user ? (
     <Redirect href='/(root)/(tabs)/home' />

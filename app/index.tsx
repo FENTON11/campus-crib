@@ -24,6 +24,7 @@ const OnboardingScreen = () => {
     }
     router.push("/(auth)/auth");
   };
+
   interface ControlProps {
     onPress?: () => void;
     disabled?: boolean;
@@ -31,22 +32,17 @@ const OnboardingScreen = () => {
 
   const renderControl = (props: ControlProps, text: string) => {
     return (
-      <TouchableOpacity
-        {...props}
-        className=' p-2 px-3 bg-primary-300  rounded-lg m-2'
-        activeOpacity={0.5}
-      >
-        <Text className=' text-white font-rubik-medium text-lg'> {text} </Text>
+      <TouchableOpacity {...props} style={styles.button} activeOpacity={0.5}>
+        <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
     );
   };
+
   const renderDots = (props: { isActive: boolean }) => {
     const { isActive } = props;
     return (
       <View
-        className={`${
-          isActive ? "bg-white" : "bg-black-100"
-        } p-[4px] mx-1 rounded-full`}
+        style={[styles.dot, { backgroundColor: isActive ? "#FFF" : "#000" }]}
       />
     );
   };
@@ -65,8 +61,12 @@ const OnboardingScreen = () => {
         {
           backgroundColor: "#FFF",
           image: (
-            <View>
-              <Text>helloe</Text>
+            <View style={styles.lottie}>
+              <LottieView
+                source={require("@/assets/lottie/find.json")}
+                autoPlay
+                loop
+              />
             </View>
           ),
           title: "Find Your Perfect Home",
@@ -76,8 +76,12 @@ const OnboardingScreen = () => {
         {
           backgroundColor: "#9333ea",
           image: (
-            <View>
-              <Text>welcome</Text>
+            <View style={styles.lottie}>
+              <LottieView
+                source={require("@/assets/lottie/connection.json")}
+                autoPlay
+                loop
+              />
             </View>
           ),
           title: "Connect with Roommates",
@@ -87,8 +91,12 @@ const OnboardingScreen = () => {
         {
           backgroundColor: "#0061FF",
           image: (
-            <View>
-              <Text>here</Text>
+            <View style={styles.lottie}>
+              <LottieView
+                source={require("@/assets/lottie/house.json")}
+                autoPlay
+                loop
+              />
             </View>
           ),
           title: "Safe and Secure",
@@ -99,7 +107,6 @@ const OnboardingScreen = () => {
       controlStatusBar={false}
       nextLabel='Next'
       skipLabel='Skip'
-      // doneLabel='Done'
       containerStyles={{ paddingHorizontal: 20 }}
       titleStyles={{ fontSize: 24, color: "#000" }}
       subTitleStyles={{ fontSize: 16, color: "#666" }}
@@ -111,6 +118,23 @@ const styles = StyleSheet.create({
   lottie: {
     width: 300,
     height: 300,
+  },
+  button: {
+    padding: 10,
+    paddingHorizontal: 12,
+    backgroundColor: "#3b82f6",
+    borderRadius: 8,
+    margin: 8,
+  },
+  buttonText: {
+    color: "#FFF",
+    fontSize: 16,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 4,
   },
 });
 
