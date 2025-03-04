@@ -16,7 +16,8 @@ class AuthService {
   constructor() {
     this.client
       .setEndpoint(appwriteConfig.appWriteEndPoint)
-      .setProject(appwriteConfig.appWriteProject);
+      .setProject(appwriteConfig.appWriteProject)
+      .setPlatform(appwriteConfig.appWritePlatform);
     this.account = new Account(this.client);
     this.database = new Databases(this.client);
     this.avatars = new Avatars(this.client);
@@ -40,6 +41,8 @@ class AuthService {
       if (!secret || !userId) throw new Error("Create OAuth2 token failed");
 
       const session = await this.account.createSession(userId, secret);
+      console.log('session',session);
+      
       if (!session) throw new Error("Failed to create session");
       return session;
     } catch (error) {
@@ -49,10 +52,10 @@ class AuthService {
   }
   async logout() {
     try {
-      await this.account.deleteSession("current");
+      await this.account.deleteSession('current');
       return true;
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       return false;
     }
   }
@@ -60,7 +63,7 @@ class AuthService {
     try {
       return await this.account.get();
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       return null;
     }
   }

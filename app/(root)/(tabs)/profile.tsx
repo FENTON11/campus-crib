@@ -6,6 +6,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { Entypo, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useAppContext } from "@/context/AppContext";
+import { authService } from "@/appwrite/authService";
 const Profile = () => {
   const { user: currentUser } = useAppContext();
   return (
@@ -130,6 +131,7 @@ const Profile = () => {
         </Link>
         <TouchableOpacity
           activeOpacity={0.8}
+          onPress={async ()=>  await authService.logout()}
           className=' bg-gray-3 p2 rounded-lg flex-row items-center gap-4'
         >
           <View className=' flex-row gap-4 items-center p-4 flex-1 bg-primary-300'>

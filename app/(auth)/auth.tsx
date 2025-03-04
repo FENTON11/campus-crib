@@ -1,12 +1,25 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useAppContext } from "@/context/AppContext";
 import { Redirect, useRouter } from "expo-router";
+import { OAuthProvider } from "react-native-appwrite";
+import { authService } from "@/appwrite/authService";
 
 const auth = () => {
   const { user } = useAppContext();
+  console.log(user);
+  
   const router = useRouter();
-  const handleSocialLogin = (provider: string) => {
+  const [loading,setLoading] = useState(false);
+  const handleSocialLogin = async (provider: OAuthProvider) => {
+    try {
+      const session = await authService.login(provider)
+      console.log('session',session);
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
     // console.log(`Logging in with ${provider}`);
     router.push("/onBoarding");
   };
@@ -35,7 +48,7 @@ const auth = () => {
           <View className='mb-6 gap-4 p-2'>
             <TouchableOpacity
               activeOpacity={0.5}
-              onPress={() => handleSocialLogin("google")}
+              onPress={() => handleSocialLogin(OAuthProvider.Google)}
               className='bg-white rounded-2xl flex-row items-center gap-4'
             >
               <Image
@@ -49,7 +62,7 @@ const auth = () => {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.5}
-              onPress={() => handleSocialLogin("facebook")}
+              onPress={() => handleSocialLogin(OAuthProvider.Facebook)}
               className='bg-white rounded-2xl flex-row items-center gap-4 p-2'
             >
               <Image
@@ -58,19 +71,6 @@ const auth = () => {
               />
               <Text className=' font-rubik-medium text-lg  text-primary-300'>
                 sign in with facebook
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => handleSocialLogin("github")}
-              className='bg-white p-2 rounded-2xl flex-row items-center gap-4'
-            >
-              <Image
-                source={require("@/assets/images/github.svg")}
-                style={{ width: 24, height: 24 }}
-              />
-              <Text className=' font-rubik-medium text-lg text-primary-300'>
-                sign in with github
               </Text>
             </TouchableOpacity>
           </View>
