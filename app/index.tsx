@@ -1,61 +1,117 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import Onboarding from "react-native-onboarding-swiper";
+import LottieView from "lottie-react-native";
+import { useRouter } from "expo-router";
 import { useAppContext } from "@/context/AppContext";
-import { Redirect } from "expo-router";
 
-const index = () => {
+const OnboardingScreen = () => {
+  const router = useRouter();
   const { user } = useAppContext();
-  const handleSocialLogin = (provider: string) => {
-    console.log(`Logging in with ${provider}`);
+
+  const handleSkip = () => {
+    if (user) {
+      router.push("/(root)/(tabs)/home");
+      return;
+    }
+    router.push("/(auth)/auth");
   };
-  return user ? (
-    <Redirect href='/(root)/(tabs)/home' />
-  ) : (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 10, gap: 5 }}>
-      <View className='h-2/3 p-1'>
-        <Image
-          // className=' object-contain w-full h-full'
-          source={require("@/assets/images/banner.png")}
-        />
-      </View>
-      <View className='mb-3 gap-2'>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => handleSocialLogin("google")}
-          className='border border-primary_1  rounded-2xl flex-row items-center gap-2'
-        >
-          <Image
-            resizeMode='contain'
-            source={require("@/assets/images/google.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <Text className=' text-primary_1'>sign in with google</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => handleSocialLogin("facebook")}
-          className=' border border-primary_1  rounded-2xl flex-row items-center gap-2 p-2'
-        >
-          <Image
-            source={require("@/assets/images/fb.svg")}
-            style={{ width: 24, height: 24 }}
-          />
-          <Text className=' text-primary_1'>sign in with facebook</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => handleSocialLogin("github")}
-          className='border border-primary_1  rounded-2xl flex-row items-center gap-2 p-2'
-        >
-          <Image
-            source={require("@/assets/images/github.svg")}
-            style={{ width: 24, height: 24 }}
-          />
-          <Text className=' text-primary_1'>sign in with github</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+
+  const handleDone = () => {
+    if (user) {
+      router.push("/(root)/(tabs)/home");
+      return;
+    }
+    router.push("/(auth)/auth");
+  };
+  interface ControlProps {
+    onPress?: () => void;
+    disabled?: boolean;
+  }
+
+  const renderControl = (props: ControlProps, text: string) => {
+    return (
+      <TouchableOpacity
+        {...props}
+        className=' p-2 px-3 bg-primary-300  rounded-lg m-2'
+        activeOpacity={0.5}
+      >
+        <Text className=' text-white font-rubik-medium text-lg'> {text} </Text>
+      </TouchableOpacity>
+    );
+  };
+  const renderDots = (props: { isActive: boolean }) => {
+    const { isActive } = props;
+    return (
+      <View
+        className={`${
+          isActive ? "bg-white" : "bg-black-100"
+        } p-[4px] mx-1 rounded-full`}
+      />
+    );
+  };
+
+  return (
+    <Onboarding
+      onSkip={handleSkip}
+      onDone={handleDone}
+      bottomBarHeight={60}
+      SkipButtonComponent={({ ...props }) => renderControl(props, "Skip")}
+      NextButtonComponent={({ ...props }) => renderControl(props, "Next")}
+      DoneButtonComponent={({ ...props }) => renderControl(props, "Done")}
+      // DotComponent={renderDots}
+      bottomBarHighlight={false}
+      pages={[
+        {
+          backgroundColor: "#FFF",
+          image: (
+            <View>
+              <Text>helloe</Text>
+            </View>
+          ),
+          title: "Find Your Perfect Home",
+          subtitle:
+            "Easily search and find the perfect house to rent with our app.",
+        },
+        {
+          backgroundColor: "#9333ea",
+          image: (
+            <View>
+              <Text>welcome</Text>
+            </View>
+          ),
+          title: "Connect with Roommates",
+          subtitle:
+            "Find compatible roommates and share the perfect living space.",
+        },
+        {
+          backgroundColor: "#0061FF",
+          image: (
+            <View>
+              <Text>here</Text>
+            </View>
+          ),
+          title: "Safe and Secure",
+          subtitle:
+            "Ensure a safe and secure living environment with our verified listings.",
+        },
+      ]}
+      controlStatusBar={false}
+      nextLabel='Next'
+      skipLabel='Skip'
+      // doneLabel='Done'
+      containerStyles={{ paddingHorizontal: 20 }}
+      titleStyles={{ fontSize: 24, color: "#000" }}
+      subTitleStyles={{ fontSize: 16, color: "#666" }}
+    />
   );
 };
 
-export default index;
+const styles = StyleSheet.create({
+  lottie: {
+    width: 300,
+    height: 300,
+  },
+});
+
+export default OnboardingScreen;

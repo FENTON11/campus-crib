@@ -10,10 +10,7 @@ const AppContext = createContext<{
 });
 const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [mode, setMode] = useState<"light" | "dark">("light");
-  const [user, setUser] = useState<User | null>({
-    username: "Fenton",
-    avatar: require("@/assets/images/cover.png"),
-  });
+  const [user, setUser] = useState<User | null>(null);
   //  console.log(children)
   const share = {
     mode,

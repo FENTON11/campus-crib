@@ -1,3 +1,4 @@
+import { Step } from "@/typings";
 import icons from "./icons";
 import images from "./images";
 
@@ -161,5 +162,69 @@ export const gallery = [
   {
     id: 6,
     image: images.japan,
+  },
+];
+
+export const steps: Step[] = [
+  {
+    label: "Personal Information",
+    fields: [
+      "fullName",
+      "email",
+      "password",
+      "phoneNumber",
+      "dateOfBirth",
+      "gender",
+    ],
+  },
+  {
+    label: "Academic Information",
+    fields: ["university", "course", "yearOfStudy"],
+  },
+  {
+    label: "Preferences",
+    fields: ["preferredLocation", "budgetRange", "roomType", "amenities"],
+  },
+  {
+    label: "Roommate Preferences",
+    fields: [
+      "roommateGender",
+      "roommateAgeRange",
+      "lifestyle",
+      "studyHabits",
+      "cleanliness",
+      "smoking",
+      "pets",
+    ],
+  },
+  {
+    label: "Additional Information",
+    fields: [
+      "hobbies",
+      "dietaryPreferences",
+      "languagePreferences",
+      "specialNeeds",
+      "moveInDate",
+      "leaseDuration",
+    ],
+  },
+  {
+    label: "Emergency Contact",
+    fields: [
+      "emergencyContactName",
+      "emergencyContactPhone",
+      "emergencyContactRelation",
+    ],
+  },
+  {
+    label: "Final Step",
+    fields: [
+      "idProof",
+      "profilePicture",
+      "socialMediaLinks",
+      "references",
+      "consent",
+      "notificationPreferences",
+    ],
   },
 ];
