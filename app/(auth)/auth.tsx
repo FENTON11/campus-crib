@@ -8,20 +8,22 @@ import { authService } from "@/appwrite/authService";
 const auth = () => {
   const { user } = useAppContext();
   console.log(user);
-  
+
   const router = useRouter();
-  const [loading,setLoading] = useState(false);
-  const handleSocialLogin = async (provider: OAuthProvider) => {
+  const [loading, setLoading] = useState(false);
+  const handleSocialLogin = async (provider: OAuthProvider, fake?: boolean) => {
     try {
-      const session = await authService.login(provider)
-      console.log('session',session);
-      
+      if (fake) {
+        router.push("/(onboarding)/personal-info");
+        return;
+      }
+      const session = await authService.login(provider);
+      console.log("session", session);
     } catch (error) {
       console.log(error);
-      
     }
     // console.log(`Logging in with ${provider}`);
-    router.push("/onBoarding");
+    router.push("/(onboarding)/personal-info");
   };
   return user ? (
     <Redirect href='/(root)/(tabs)/home' />
@@ -30,8 +32,8 @@ const auth = () => {
       <View className=' h-screen bg-primary-300'>
         <View className='p-2  flex-1 px-2 items-center justify-end pb-6 mb-4 bg-white rounded-b-[4rem]'>
           <Image
-            className=' object-cover w-full h-full'
-            resizeMode='cover'
+            className=' object-contain p-4 max-w-full max-h-full'
+            resizeMode='contain'
             source={require("@/assets/images/logo.png")}
           />
           <Text className=' text-4xl text-primary-300 font-rubik-extrabold'>
@@ -62,7 +64,7 @@ const auth = () => {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.5}
-              onPress={() => handleSocialLogin(OAuthProvider.Facebook)}
+              onPress={() => handleSocialLogin(OAuthProvider.Facebook, true)}
               className='bg-white rounded-2xl flex-row items-center gap-4 p-2'
             >
               <Image
