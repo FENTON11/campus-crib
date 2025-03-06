@@ -11,10 +11,10 @@ export type appwriteConfiguration = {
   appWritePlatform: string;
 };
 export interface User extends Models.Document {
-  username: string;
+  name: string;
   email: string;
   avatar: string;
-  accountId: string;
+  account_id: string;
   favorites: string[];
   phone: number;
   role: "admin" | "normal" | "super_admin";
@@ -39,9 +39,25 @@ export interface Property extends Models.Document {
   name: string;
   image: string;
   description: string;
+  location: string;
   rating: number;
   price: number;
+  bathroom: number;
+  address: string;
+  area: number;
+  type:
+    | "Apartment"
+    | "House"
+    | "Townhouse"
+    | "Duplex"
+    | "Condo"
+    | "Villa"
+    | "Studio"
+    | "Other";
+  reviews?: number;
+  beds: number;
   gallery: string[];
+  amenities?: string[];
   agent: Agent;
 }
 
