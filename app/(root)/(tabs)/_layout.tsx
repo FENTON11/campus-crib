@@ -12,12 +12,12 @@ const TabIcon = ({
   icon: ImageSourcePropType;
   title: string;
 }) => (
-  <View className="flex-1 mt-3 flex flex-col items-center">
+  <View className='flex-1 mt-3 flex flex-col items-center'>
     <Image
       source={icon}
       tintColor={focused ? "#0061FF" : "#666876"}
-      resizeMode="contain"
-      className={`${focused? 'size-8' : 'size-6'} `}
+      resizeMode='contain'
+      className={`${focused ? "size-8" : "size-6"} `}
     />
     <Text
       className={`${
@@ -35,49 +35,54 @@ const TabsLayout = () => {
   return (
     <Tabs
       screenOptions={{
-        headerShown:false,
+        headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "white",
           position: "absolute",
           borderTopColor: "#0061FF1A",
           borderTopWidth: 1,
-          minHeight: 70,
+          // height: 50,
+          // minHeight: 70,
         },
       }}
     >
       <Tabs.Screen
-        name="home"
+        name='home'
         options={{
-        tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.home} title="Home" />
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.home} title='Home' />
           ),
         }}
       />
       <Tabs.Screen
-        name="search"
+        name='search'
         options={{
-         tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.search} title="Explore" />
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.search} title='Explore' />
           ),
         }}
       />
       <Tabs.Screen
-        name="roommate"
+        name='roommate'
         options={{
-         tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.roommate} title="room mate" />
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              focused={focused}
+              icon={icons.roommate}
+              title='room mate'
+            />
           ),
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name='profile'
         options={{
-         tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.person} title="Profile" />
+          tabBarIcon: ({ focused }) => (
+            <TabIcon focused={focused} icon={icons.person} title='Profile' />
           ),
         }}
-      /> 
+      />
     </Tabs>
   );
 };

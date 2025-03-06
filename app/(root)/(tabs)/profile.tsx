@@ -12,7 +12,7 @@ const Profile = () => {
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
-      className='bg-primary p-2 flex-1 gap-3'
+      className='bg-primary p-2  flex-1 pb-8 gap-2'
     >
       {/* header start */}
       <View className=' flex-row items-center justify-between'>
@@ -50,7 +50,7 @@ const Profile = () => {
       </View>
       {/* user profile end */}
       {/* controls start */}
-      <View className=' gap-4'>
+      <View className=' gap-1'>
         <Link asChild href={"/(root)/(stack)/personal-details"}>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -130,7 +130,7 @@ const Profile = () => {
           onPress={async () => await authService.logout()}
           className=' bg-gray-3 p2 rounded-lg flex-row items-center gap-4'
         >
-          <View className=' flex-row gap-4 items-center p-4 flex-1 bg-primary-300'>
+          <View className=' flex-row gap-4 items-center p-4 flex-1  rounded-lg bg-primary-300/70'>
             <MaterialIcons name='logout' size={24} color='white' />
             <Text className='  font-rubik-medium text-lg text-white'>
               logout
