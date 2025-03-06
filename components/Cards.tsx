@@ -12,7 +12,7 @@ export const FeaturedCard = ({ onPress }: Props) => {
       activeOpacity={0.5}
       onPress={onPress}
       className='flex flex-col items-start
-    w-80 h-96 relative'
+    w-64 h-72 relative'
     >
       <Image source={images.japan} className='size-full rounded-2xl' />
       <Image
