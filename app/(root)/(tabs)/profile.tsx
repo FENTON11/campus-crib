@@ -31,11 +31,7 @@ const Profile = () => {
       <View className='items-center justify-center gap-3 p-2 mb-4'>
         <View className=' relative'>
           <Image
-            source={
-              currentUser
-                ? currentUser?.avatar
-                : require("@/assets/images/cover.png")
-            }
+            source={require("@/assets/images/avatar.png")}
             style={{ width: 100, height: 100 }}
             resizeMode='cover'
             className=' rounded-full'
@@ -131,7 +127,7 @@ const Profile = () => {
         </Link>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={async ()=>  await authService.logout()}
+          onPress={async () => await authService.logout()}
           className=' bg-gray-3 p2 rounded-lg flex-row items-center gap-4'
         >
           <View className=' flex-row gap-4 items-center p-4 flex-1 bg-primary-300'>
