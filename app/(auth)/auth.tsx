@@ -1,4 +1,12 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Platform,
+  Alert,
+} from "react-native";
 import React from "react";
 import { useAppContext } from "@/context/AppContext";
 import { Redirect, useRouter } from "expo-router";
@@ -14,11 +22,15 @@ const auth = () => {
     try {
       const session = await authService.login(provider);
       console.log("session", session);
+      router.push("/(root)/(onboarding)/personal-info");
     } catch (error) {
-      console.log(error);
+      const err = error as Error;
+      if (Platform.OS === "web") {
+        alert("Error: " + (err?.message || "Failed to login"));
+      } else {
+        Alert.alert("Error", err?.message || "Failed to login");
+      }
     }
-    // console.log(`Logging in with ${provider}`);
-    router.push("/(onboarding)/personal-info");
   };
   return user ? (
     <Redirect href='/(root)/(tabs)/home' />

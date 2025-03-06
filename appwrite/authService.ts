@@ -57,7 +57,6 @@ class AuthService {
       console.log("user", user);
       return true;
     } catch (error) {
-      console.error(error);
       return false;
     }
   }
