@@ -43,7 +43,7 @@ const TabsLayout = () => {
           borderTopColor: "#0061FF1A",
           borderTopWidth: 1,
           // height: 50,
-          // minHeight: 70,
+          minHeight: 70,
         },
       }}
     >
