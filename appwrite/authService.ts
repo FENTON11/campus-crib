@@ -4,6 +4,7 @@ import {
   Databases,
   Avatars,
   OAuthProvider,
+  Query,
 } from "react-native-appwrite";
 import { appwriteConfig } from "./appwriteConfig";
 import * as Linking from "expo-linking";
@@ -65,6 +66,28 @@ class AuthService {
     } catch (error) {
       // console.error(error);
       return null;
+    }
+  }
+  async getFeaturedProperties(){
+    try {
+      
+
+      
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  async getProperties({filter,query, limit} :{
+    filter: string;
+    query: string;
+    limit?: number;
+  }){
+    try {
+     
+      
+    } catch (error) {
+      console.error(error);
+      return [];
     }
   }
 }

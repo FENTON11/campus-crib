@@ -11,6 +11,7 @@ const AppContext = createContext<{
   mode: "light",
 });
 const AppContextProvider = ({ children }: { children: ReactNode }) => {
+  
   const [mode, setMode] = useState<"light" | "dark">("light");
   const [user, setUser] = useState<User | null | any>(null);
   const [loading,setLoading] = useState(false);
