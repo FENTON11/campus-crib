@@ -42,10 +42,10 @@ class AuthService {
       if (!secret || !userId) throw new Error("Create OAuth2 token failed");
 
       const session = await this.account.createSession(userId, secret);
-      console.log('session',session);
-      
+      console.log("session", session);
+
       if (!session) throw new Error("Failed to create session");
-      return session;
+      return true;
     } catch (error) {
       console.error(error);
       return false;
@@ -53,7 +53,7 @@ class AuthService {
   }
   async logout() {
     try {
-      await this.account.deleteSession('current');
+      await this.account.deleteSession("current");
       return true;
     } catch (error) {
       // console.error(error);
