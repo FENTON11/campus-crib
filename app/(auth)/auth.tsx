@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { useAppContext } from "@/context/AppContext";
 import { Redirect, useRouter } from "expo-router";
 import { OAuthProvider } from "react-native-appwrite";
@@ -10,13 +10,8 @@ const auth = () => {
   console.log(user);
 
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const handleSocialLogin = async (provider: OAuthProvider, fake?: boolean) => {
+  const handleSocialLogin = async (provider: OAuthProvider) => {
     try {
-      if (fake) {
-        router.push("/(onboarding)/personal-info");
-        return;
-      }
       const session = await authService.login(provider);
       console.log("session", session);
     } catch (error) {
@@ -64,7 +59,7 @@ const auth = () => {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.5}
-              onPress={() => handleSocialLogin(OAuthProvider.Facebook, true)}
+              onPress={() => handleSocialLogin(OAuthProvider.Facebook)}
               className='bg-white rounded-2xl flex-row items-center gap-4 p-2'
             >
               <Image
