@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Onboarding from "react-native-onboarding-swiper";
 import LottieView from "lottie-react-native";
 import { useRouter } from "expo-router";
 import { useAppContext } from "@/context/AppContext";
+import * as SecureStore from "expo-secure-store";
+import { getItemFromSecureStore, saveItemToSecureStore } from "@/lib";
 
 const OnboardingScreen = () => {
   const router = useRouter();
   const { user } = useAppContext();
 
   const handleSkip = () => {
+    saveOnboardingState();
     if (user) {
       router.push("/(root)/(tabs)/home");
       return;
@@ -18,12 +21,42 @@ const OnboardingScreen = () => {
   };
 
   const handleDone = () => {
+    saveOnboardingState();
     if (user) {
       router.push("/(root)/(tabs)/home");
       return;
     }
     router.push("/(auth)/auth");
   };
+
+  const saveOnboardingState = async () => {
+    try {
+      await saveItemToSecureStore("onboardingCompleted", JSON.stringify(true));
+    } catch (error) {
+      console.error("Error saving onboarding state:", error);
+    }
+  };
+
+  const checkOnboardingState = async () => {
+    try {
+      const onboardingCompleted = await getItemFromSecureStore(
+        "onboardingCompleted"
+      );
+      if (onboardingCompleted) {
+        if (user) {
+          router.push("/(root)/(tabs)/home");
+        } else {
+          router.push("/(auth)/auth");
+        }
+      }
+    } catch (error) {
+      console.error("Error checking onboarding state:", error);
+    }
+  };
+
+  useLayoutEffect(() => {
+    checkOnboardingState();
+  }, []);
 
   interface ControlProps {
     onPress?: () => void;
@@ -38,15 +71,6 @@ const OnboardingScreen = () => {
     );
   };
 
-  const renderDots = (props: { isActive: boolean }) => {
-    const { isActive } = props;
-    return (
-      <View
-        style={[styles.dot, { backgroundColor: isActive ? "#FFF" : "#000" }]}
-      />
-    );
-  };
-
   return (
     <Onboarding
       onSkip={handleSkip}
@@ -55,7 +79,6 @@ const OnboardingScreen = () => {
       SkipButtonComponent={({ ...props }) => renderControl(props, "Skip")}
       NextButtonComponent={({ ...props }) => renderControl(props, "Next")}
       DoneButtonComponent={({ ...props }) => renderControl(props, "Done")}
-      // DotComponent={renderDots}
       bottomBarHighlight={false}
       pages={[
         {

@@ -25,9 +25,8 @@ class AuthService {
   }
   async login(provider: OAuthProvider) {
     try {
-      const redirectUri = Linking.createURL("/");
+      const redirectUri = Linking.createURL("/(auth)/auth");
       const response = this.account.createOAuth2Token(provider, redirectUri);
-
       if (!response) throw new Error("Failed to login");
       const browserResult = await openAuthSessionAsync(
         response.toString(),
@@ -35,16 +34,27 @@ class AuthService {
       );
       if (browserResult.type !== "success")
         throw new Error("Create OAuth2 token failed");
-
       const url = new URL(browserResult.url);
       const secret = url.searchParams.get("secret")?.toString();
       const userId = url.searchParams.get("userId")?.toString();
       if (!secret || !userId) throw new Error("Create OAuth2 token failed");
-
       const session = await this.account.createSession(userId, secret);
-      console.log("session", session);
-
       if (!session) throw new Error("Failed to create session");
+      const user = await this.account.get();
+      if (!user) throw new Error("Failed to get user");
+      const savedUser = await this.database.getDocument(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteUsersCollectionID,
+        user.$id
+      );
+      if (savedUser) {
+        //format the user collectly
+        return savedUser;
+        //login them in
+      } else {
+        //register them in and logo them in
+      }
+      console.log("user", user);
       return true;
     } catch (error) {
       console.error(error);
@@ -68,23 +78,22 @@ class AuthService {
       return null;
     }
   }
-  async getFeaturedProperties(){
+  async getFeaturedProperties() {
     try {
-      
-
-      
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
-  async getProperties({filter,query, limit} :{
+  async getProperties({
+    filter,
+    query,
+    limit,
+  }: {
     filter: string;
     query: string;
     limit?: number;
-  }){
+  }) {
     try {
-     
-      
     } catch (error) {
       console.error(error);
       return [];

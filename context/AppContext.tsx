@@ -1,4 +1,5 @@
 import { authService } from "@/appwrite/authService";
+import { getItemFromSecureStore, saveItemToSecureStore } from "@/lib";
 import { User } from "@/typings";
 import React, {
   createContext,
@@ -7,7 +8,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { ActivityIndicator, Alert } from "react-native";
+import { ActivityIndicator, Alert, Platform, View } from "react-native";
 
 const AppContext = createContext<{
   user: User | null;
@@ -16,38 +17,58 @@ const AppContext = createContext<{
   user: null,
   mode: "light",
 });
+
 const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [mode, setMode] = useState<"light" | "dark">("light");
-  const [user, setUser] = useState<User | null | any>({ username: "maina" });
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null | any>();
+  const [loading, setLoading] = useState(true);
+
   const getUser = async () => {
     try {
       setLoading(true);
-      const session = await authService.getUser();
-      if (session) {
-        setUser(session);
+      let user = await getItemFromSecureStore("user");
+      if (!user) {
+        user = await authService.getUser();
+        if (user) {
+          await saveItemToSecureStore("user", user);
+        }
+      }
+      if (user) {
+        console.log("user", user);
+        setUser(user);
       }
     } catch (error) {
       const err = error as Error;
-      return Alert.alert("Error", err?.message || "failed to get user");
+      if (Platform.OS === "web") {
+        alert("Error: " + (err?.message || "Failed to get user"));
+      } else {
+        Alert.alert("Error", err?.message || "Failed to get user");
+      }
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getUser();
   }, []);
-  //  console.log(children)
+
   const share = {
     mode,
     setMode,
     user,
     setUser,
   };
+
   return (
     <AppContext.Provider value={{ ...share }}>
-      {" "}
-      {loading ? <ActivityIndicator /> : children}{" "}
+      {loading ? (
+        <View>
+          <ActivityIndicator />
+        </View>
+      ) : (
+        children
+      )}
     </AppContext.Provider>
   );
 };
