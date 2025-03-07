@@ -32,6 +32,8 @@ class AuthService {
         response.toString(),
         redirectUri
       );
+      console.log("loggin in");
+
       if (browserResult.type !== "success")
         throw new Error("Create OAuth2 token failed");
       const url = new URL(browserResult.url);
@@ -39,7 +41,11 @@ class AuthService {
       const userId = url.searchParams.get("userId")?.toString();
       if (!secret || !userId) throw new Error("Create OAuth2 token failed");
       const session = await this.account.createSession(userId, secret);
+      console.log("login session", session);
+
       if (!session) throw new Error("Failed to create session");
+      console.log("new session", session);
+
       const user = await this.account.get();
       if (!user) throw new Error("Failed to get user");
       const savedUser = await this.database.getDocument(

@@ -1,5 +1,6 @@
 import { authService } from "@/appwrite/authService";
 import { getItemFromSecureStore, saveItemToSecureStore } from "@/lib";
+import { seedProperties } from "@/lib/seed";
 import { User } from "@/typings";
 import React, {
   createContext,
@@ -27,8 +28,11 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
     try {
       setLoading(true);
       let user = await getItemFromSecureStore("user");
+      console.log("saved user", user);
       if (!user) {
         user = await authService.getUser();
+        console.log("user from db", user);
+
         if (user) {
           await saveItemToSecureStore("user", user);
         }
@@ -52,6 +56,9 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     getUser();
   }, []);
+  // useEffect(() => {
+  //   seedProperties();
+  // }, []);
 
   const share = {
     mode,

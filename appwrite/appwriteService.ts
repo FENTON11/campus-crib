@@ -18,7 +18,18 @@ class AppWriteService {
     this.database = new Databases(this.client);
     this.storage = new Storage(this.client);
   }
-
+  async seedProperties(data: any) {
+    try {
+      await this.database.createDocument(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWritePropertyCollectionID,
+        ID.unique(),
+        data
+      );
+    } catch (error) {
+      console.log("Error seeding data:", error);
+    }
+  }
   async uploadFile(file: {
     name: string;
     type: string;
