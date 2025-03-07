@@ -5,10 +5,13 @@ import {
   Avatars,
   OAuthProvider,
   Query,
+  ID,
 } from "react-native-appwrite";
 import { appwriteConfig } from "./appwriteConfig";
 import * as Linking from "expo-linking";
 import { openAuthSessionAsync } from "expo-web-browser";
+import { User } from "@/typings";
+import { userFormatter } from "@/lib";
 class AuthService {
   private client = new Client();
   private account;
@@ -22,6 +25,17 @@ class AuthService {
     this.account = new Account(this.client);
     this.database = new Databases(this.client);
     this.avatars = new Avatars(this.client);
+  }
+  async checkUser (id:string){
+    try {
+      return await this.database.getDocument(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteUsersCollectionID,
+        id
+      );
+    } catch (error) {
+      return false
+    }
   }
   async login(provider: OAuthProvider) {
     try {
@@ -41,31 +55,35 @@ class AuthService {
       const userId = url.searchParams.get("userId")?.toString();
       if (!secret || !userId) throw new Error("Create OAuth2 token failed");
       const session = await this.account.createSession(userId, secret);
-      console.log("login session", session);
 
       if (!session) throw new Error("Failed to create session");
       console.log("new session", session);
 
       const user = await this.account.get();
+      console.log('user test test',user);
+      
       if (!user) throw new Error("Failed to get user");
-      const savedUser = await this.database.getDocument(
-        appwriteConfig.appWriteDatabase,
-        appwriteConfig.appWriteUsersCollectionID,
-        user.$id
-      );
+      const savedUser = await this.checkUser(user.$id)
       if (savedUser) {
-        //format the user collectly
-        return savedUser;
-        //login them in
+    
+        return userFormatter(savedUser);
       } else {
-        //register them in and logo them in
+        const newUser:User = {
+          name:user.name,
+          email:user.email,
+          account_id:user.$id,
+          avatar:this.avatars.getInitials(user.name)
+
+        }
+        const res = await this.database.createDocument(appwriteConfig.appWriteDatabase,appwriteConfig.appWriteUsersCollectionID,ID.unique(),newUser)
+        return userFormatter(res)
       }
-      console.log("user", user);
-      return true;
     } catch (error) {
-      return false;
+      const err = error as Error;
+      throw new Error(err.message || 'Failed to login in')
     }
   }
+
   async logout() {
     try {
       await this.account.deleteSession("current");

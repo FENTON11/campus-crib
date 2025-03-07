@@ -14,33 +14,39 @@ import { ActivityIndicator, Alert, Platform, View } from "react-native";
 const AppContext = createContext<{
   user: User | null;
   mode: "light" | "dark";
+
 }>({
   user: null,
   mode: "light",
+
 });
 
 const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [mode, setMode] = useState<"light" | "dark">("light");
-  const [user, setUser] = useState<User | null | any>({ username: "Guest" });
+  const [user, setUser] = useState<User | null | any>(null);
   const [loading, setLoading] = useState(true);
+
+  const updateUser = (user:User)=>{
+    setUser(user)
+  }
 
   const getUser = async () => {
     try {
       setLoading(true);
-      let user = await getItemFromSecureStore("user");
-      console.log("saved user", user);
+      const user = await authService.getUser();
+      // let user = await getItemFromSecureStore("user");
+      // console.log("saved user", user);
       if (!user) {
-        user = await authService.getUser();
         console.log("user from db", user);
 
-        if (user) {
-          await saveItemToSecureStore("user", user);
-        }
+        // if (user) {
+        //   await saveItemToSecureStore("user", null);
+        // }
       }
-      if (user) {
-        console.log("user", user);
-        setUser(user);
-      }
+      // if (user) {
+      //   console.log("user", user);
+      //   setUser(user);
+      // }
     } catch (error) {
       const err = error as Error;
       if (Platform.OS === "web") {
@@ -63,6 +69,7 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const share = {
     mode,
     setMode,
+    updateUser,
     user,
     setUser,
   };
