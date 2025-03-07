@@ -40,9 +40,9 @@ export interface Property extends Models.Document {
   image: string;
   description: string;
   location: string;
-  rating: number;
   price: number;
-  bathroom: number;
+  featured: boolean;
+  bathrooms: number;
   address: string;
   area: number;
   type:

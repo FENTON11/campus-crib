@@ -30,9 +30,13 @@ export const useImagePicker = () => {
   };
 };
 
-export const useCustomFetch = <T>(fn: () => Promise<T>) => {
+export const useCustomFetch = <T>(
+  fn: () => Promise<T>,
+  dependencies: any[] = []
+) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<T | undefined>(undefined);
+
   const getData = useCallback(async () => {
     try {
       setLoading(true);
@@ -42,22 +46,22 @@ export const useCustomFetch = <T>(fn: () => Promise<T>) => {
       const err = error as Error;
       Platform.OS === "android"
         ? ToastAndroid.showWithGravity(
-            err.message || "Something went wrong. Try again Later",
+            err.message || "Something went wrong. Try again later",
             ToastAndroid.TOP,
-            10
+            ToastAndroid.SHORT
           )
         : Alert.alert(
             "Error",
-            err.message || "Something went wrong. Try again Later"
+            err.message || "Something went wrong. Try again later"
           );
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [...dependencies]);
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
-  return { loading, data };
+  return { loading, data, refetch: getData };
 };

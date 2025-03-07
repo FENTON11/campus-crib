@@ -194,7 +194,7 @@ import { appwriteService } from "@/appwrite/appwriteService";
 // export default seed;
 
 export async function seedProperties() {
-  const agentId = "7cab34200061129d230"; // Agent ID
+  const agentId = "67cab34200061129d230"; // Agent ID
   const properties = [
     {
       name: "Luxury Apartment",
