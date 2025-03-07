@@ -70,7 +70,7 @@ const TabsLayout = () => {
             <TabIcon
               focused={focused}
               icon={icons.roommate}
-              title='room mate'
+              title='roommate finder'
             />
           ),
         }}
