@@ -3,9 +3,11 @@ import {
   Databases,
   ID,
   ImageGravity,
+  Query,
   Storage,
 } from "react-native-appwrite";
 import { appwriteConfig } from "./appwriteConfig";
+import { propertiesFormatter } from "@/lib";
 class AppWriteService {
   private client = new Client();
   private database;
@@ -30,6 +32,56 @@ class AppWriteService {
       console.log("Error seeding data:", error);
     }
   }
+
+  async getFeaturedProperties() {
+    try {
+      const res = await this.database.listDocuments(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWritePropertyCollectionID,
+        [Query.equal("featured", true)]
+      );
+      return propertiesFormatter(res.documents);
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to get featured properties");
+    }
+  }
+  async getProperties() {
+    try {
+      const res = await this.database.listDocuments(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWritePropertyCollectionID
+      );
+      return propertiesFormatter(res.documents);
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to get properties");
+    }
+  }
+  async search(searchTerm?: string) {
+    try {
+      if (searchTerm) {
+        const res = await this.database.listDocuments(
+          appwriteConfig.appWriteDatabase,
+          appwriteConfig.appWritePropertyCollectionID,
+          [
+            Query.or([
+              Query.search("name", searchTerm),
+              Query.search("address", searchTerm),
+              Query.search("type", searchTerm),
+            ]),
+          ]
+        );
+        return propertiesFormatter(res.documents);
+      } else {
+        return this.getProperties();
+      }
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to search");
+    }
+  }
+
   async uploadFile(file: {
     name: string;
     type: string;

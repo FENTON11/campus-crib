@@ -83,27 +83,6 @@ class AuthService {
       return null;
     }
   }
-  async getFeaturedProperties() {
-    try {
-    } catch (error) {
-      console.error(error);
-    }
-  }
-  async getProperties({
-    filter,
-    query,
-    limit,
-  }: {
-    filter: string;
-    query: string;
-    limit?: number;
-  }) {
-    try {
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  }
 }
 
 export const authService: AuthService = new AuthService();

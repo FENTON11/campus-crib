@@ -42,7 +42,7 @@ export const userFormatter = (doc: Models.Document): User => {
     $permissions: doc?.$permissions,
   };
 };
-export const propertyormatter = (doc: Models.Document): Property => {
+export const propertyFormatter = (doc: Models.Document): Property => {
   return {
     name: doc?.name,
     image: doc?.image,
@@ -51,10 +51,10 @@ export const propertyormatter = (doc: Models.Document): Property => {
     location: doc?.location,
     type: doc?.type,
     beds: doc?.beds,
-    bathroom: doc?.bathroom,
+    bathrooms: doc?.bathrooms,
     area: doc?.area,
     price: doc?.price,
-    rating: doc?.rating,
+    featured: doc?.featured,
     address: doc?.address,
     description: doc?.description,
     $id: doc?.$id,
@@ -64,4 +64,27 @@ export const propertyormatter = (doc: Models.Document): Property => {
     $updatedAt: doc?.$updatedAt,
     $permissions: doc?.$permissions,
   };
+};
+export const propertiesFormatter = (docs: Models.Document[]): Property[] => {
+  return docs.map((doc) => ({
+    name: doc?.name,
+    image: doc?.image,
+    agent: doc?.agent,
+    gallery: doc?.gallery,
+    location: doc?.location,
+    type: doc?.type,
+    beds: doc?.beds,
+    bathrooms: doc?.bathrooms,
+    area: doc?.area,
+    price: doc?.price,
+    featured: doc?.featured,
+    address: doc?.address,
+    description: doc?.description,
+    $id: doc?.$id,
+    $collectionId: doc?.$collectionId,
+    $databaseId: doc?.$databaseId,
+    $createdAt: doc?.$createdAt,
+    $updatedAt: doc?.$updatedAt,
+    $permissions: doc?.$permissions,
+  }));
 };
