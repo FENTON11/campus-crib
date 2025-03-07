@@ -21,7 +21,7 @@ const AppContext = createContext<{
 
 const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [mode, setMode] = useState<"light" | "dark">("light");
-  const [user, setUser] = useState<User | null | any>();
+  const [user, setUser] = useState<User | null | any>({ username: "Guest" });
   const [loading, setLoading] = useState(true);
 
   const getUser = async () => {
