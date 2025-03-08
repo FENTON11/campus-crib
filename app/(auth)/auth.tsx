@@ -14,15 +14,18 @@ import { OAuthProvider } from "react-native-appwrite";
 import { authService } from "@/appwrite/authService";
 
 const auth = () => {
-  const { user } = useAppContext();
+  const { user,updateUser} = useAppContext();
   console.log(user);
 
   const router = useRouter();
   const handleSocialLogin = async (provider: OAuthProvider) => {
     try {
-      const session = await authService.login(provider);
-      console.log("session", session);
-      router.push("/(root)/(onboarding)/personal-info");
+      const newUser = await authService.login(provider);
+      if(newUser){
+        updateUser(newUser)
+        router.push("/(root)/(onboarding)/personal-info");
+
+      }
     } catch (error) {
       const err = error as Error;
       if (Platform.OS === "web") {

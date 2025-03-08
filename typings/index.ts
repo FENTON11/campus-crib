@@ -13,10 +13,11 @@ export type appwriteConfiguration = {
 export interface User extends Models.Document {
   name: string;
   email: string;
-  avatar: string;
+  avatar: URL;
   account_id: string;
   favorites: string[];
-  phone: number;
+  level:number,
+  phone?: number;
   role: "admin" | "normal" | "super_admin";
 }
 export interface Agent extends Models.Document {
