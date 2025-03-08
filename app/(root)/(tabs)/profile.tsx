@@ -110,6 +110,21 @@ const Profile = () => {
             </TouchableOpacity>
           </TouchableOpacity>
         </Link>
+        <Link asChild href={"/(root)/(agents)/(tabs)/overview"}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            className=' bg-gray-3 p2 rounded-lg flex-row items-center gap-4'
+          >
+            <View className=' flex-row gap-4 items-center p-4 flex-1'>
+              <Ionicons name='people' size={20} color='#0061FF' />
+              <Text className=' font-rubik-medium text-lg'>manage</Text>
+            </View>
+
+            <TouchableOpacity activeOpacity={0.8} className=' p-2'>
+              <Entypo name='chevron-right' size={24} color='#0061FF' />
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </Link>
         <Link asChild href={"/(root)/(stack)/notifications"}>
           <TouchableOpacity
             activeOpacity={0.8}
