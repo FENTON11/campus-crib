@@ -2,9 +2,12 @@ import { Tabs } from "expo-router";
 import {
   Image,
   ImageSourcePropType,
+  StyleProp,
   Text,
   TouchableOpacity,
+  TouchableOpacityProps,
   View,
+  ViewStyle,
 } from "react-native";
 import {
   AntDesign,
@@ -12,17 +15,63 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 import TabBar from "@/components/tabBar/TabBar";
+
+interface TabButtonProps extends TouchableOpacityProps {
+  focused: boolean;
+  children: React.ReactNode;
+}
+const TabButton: React.FC<TabButtonProps> = ({
+  focused,
+  children,
+  ...props
+}) => (
+  <TouchableOpacity
+    {...props}
+    style={[
+      {
+        borderRadius: 30,
+        paddingHorizontal: 15,
+        paddingVertical: 5,
+        backgroundColor: focused ? "white" : "gray",
+        elevation: 2,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+      props.style as StyleProp<ViewStyle>,
+    ]}
+  >
+    {children}
+  </TouchableOpacity>
+);
 const AgentsTabLayout = () => {
   return (
     <Tabs
-      tabBar={(props) => <TabBar {...props} key={props.state.index} />}
+      // tabBar={(props) => <TabBar {...props} key={props.state.index} />}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarItemStyle: {
+          borderRadius: 30,
+          paddingHorizontal: 15,
+          paddingVertical: 5,
+          // backgroundColor: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          // position: "absolute",
+          // minHeight: 70,
+        },
         tabBarStyle: {
-          backgroundColor: "white",
-          position: "absolute",
-          minHeight: 70,
+          marginHorizontal: 20,
+
+          borderRadius: 30,
+          marginVertical: 10,
+          display: "flex",
+          backgroundColor: "gray",
+
+          // position: "absolute",
+          // minHeight: 70,
         },
       }}
     >
@@ -50,6 +99,7 @@ const AgentsTabLayout = () => {
           ),
         }}
       />
+
       <Tabs.Screen
         name='properties'
         options={{
