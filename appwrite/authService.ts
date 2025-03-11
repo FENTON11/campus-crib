@@ -26,7 +26,7 @@ class AuthService {
     this.database = new Databases(this.client);
     this.avatars = new Avatars(this.client);
   }
-  async checkUser (id:string){
+  checkUser = async (id: string) => {
     try {
       return await this.database.getDocument(
         appwriteConfig.appWriteDatabase,
@@ -34,9 +34,9 @@ class AuthService {
         id
       );
     } catch (error) {
-      return false
+      return false;
     }
-  }
+  };
   // async login(provider: OAuthProvider) {
   //   try {
   //     const redirectUri = Linking.createURL("/(auth)/auth");
@@ -86,70 +86,79 @@ class AuthService {
 
   async login(provider: OAuthProvider) {
     try {
-      // Check if a user is already logged in
-      const existingUser = await this.account.get();
-      if (existingUser) {
-        console.log("User already logged in:", existingUser);
-        const savedUser = await this.checkUser(existingUser.$id);
-        return savedUser ? userFormatter(savedUser) : this.createNewUser(existingUser as User);
-      }
-    } catch (error) {
-      console.log("No existing session, proceeding with login...");
-    }
+      const redirectUri = Linking.createURL("/auth/callback"); // Ensure deep linking URL is correct
   
-    try {
-      const redirectUri = Linking.createURL("/(auth)/auth");
-      const response = this.account.createOAuth2Token(provider, redirectUri);
+      // 🔹 Step 1: Check if a session already exists
+      try {
+        const existingUser = await this.account.get();
+        if (existingUser) {
+          console.log("Existing session found:", existingUser);
+          return userFormatter(existingUser);
+        }
+      } catch (error) {
+        console.log("No active session, proceeding with login...");
+      }
+  
+      // 🔹 Step 2: Get OAuth Login URL
+      const response = await this.account.createOAuth2Token(provider, redirectUri);
+  
       if (!response) throw new Error("Failed to login");
   
+      // 🔹 Step 3: Open OAuth session
       const browserResult = await openAuthSessionAsync(response.toString(), redirectUri);
-      if (browserResult.type !== "success") throw new Error("Create OAuth2 token failed");
+      console.log("Logging in...");
   
+      if (browserResult.type !== "success") throw new Error("OAuth2 token creation failed");
+  
+      // 🔹 Step 4: Extract OAuth credentials from response URL
       const url = new URL(browserResult.url);
-      const secret = url.searchParams.get("secret")?.toString();
-      const userId = url.searchParams.get("userId")?.toString();
-      if (!secret || !userId) throw new Error("Create OAuth2 token failed");
+      const secret = url.searchParams.get("secret");
+      const userId = url.searchParams.get("userId");
   
-      // Check if session creation is needed
-      try {
-        await this.account.get();
-        console.log("Session already exists, skipping session creation");
-      } catch {
-        console.log("No session found, creating a new one...");
-        await this.account.createSession(userId, secret);
-      }
+      if (!secret || !userId) throw new Error("Invalid OAuth response");
   
-      // Fetch user details
+      // 🔹 Step 5: Create user session
+      const session = await this.account.createSession(userId, secret);
+      if (!session) throw new Error("Failed to create session");
+  
+      console.log("New session:", session);
+  
+      // 🔹 Step 6: Get user data
       const user = await this.account.get();
-      console.log("User fetched:", user);
+      console.log("User data:", user);
   
-      return this.checkUser(user.$id).then(savedUser => savedUser ? userFormatter(savedUser) : this.createNewUser(user as User));
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message || "Failed to login");
-      } else {
-        throw new Error("Failed to login");
+      if (!user) throw new Error("Failed to retrieve user");
+  
+      // 🔹 Step 7: Check if user exists in database
+      const savedUser = await this.checkUser(user.$id);
+      if (savedUser) {
+        return userFormatter(savedUser);
       }
-    }
-  }
   
-  private async createNewUser(user: User) {
-    const newUser: User = {
-      name: user.name,
-      email: user.email,
-      account_id: user.$id,
-      avatar: this.avatars.getInitials(user.name),
-   };
-    const res = await this.database.createDocument(
-      appwriteConfig.appWriteDatabase,
-      appwriteConfig.appWriteUsersCollectionID,
-      ID.unique(),
-      newUser
-    );
-    return userFormatter(res);
+      // 🔹 Step 8: Create a new user if not found
+      const newUser: User = {
+        name: user.name,
+        email: user.email,
+        account_id: user.$id,
+        avatar: this.avatars.getInitials(user.name),
+      };
+  
+      const res = await this.database.createDocument(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteUsersCollectionID,
+        ID.unique(),
+        newUser
+      );
+  
+      return userFormatter(res);
+    } catch (error) {
+      console.error("Login error:", error);
+      throw new Error(error instanceof Error ? error.message : "Login failed");
+    }
   }
   
 
+  
   async logout() {
     try {
       await this.account.deleteSession("current");
