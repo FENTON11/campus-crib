@@ -11,42 +11,49 @@ import React, {
 } from "react";
 import { ActivityIndicator, Alert, Platform, View } from "react-native";
 
-const AppContext = createContext<{
+type AppContextProps = {
   user: User | null;
   mode: "light" | "dark";
+  setUser:(user:User |null)=> void
+  updateUser:(user:User)=> void
 
-}>({
+}
+
+const AppContext = createContext<AppContextProps>({
   user: null,
   mode: "light",
-
+  setUser: (user:User| null) => {},
+  updateUser: (user:User) => {}
 });
 
 const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [mode, setMode] = useState<"light" | "dark">("light");
-  const [user, setUser] = useState<User | null | any>(null);
+  const [user, setUser] = useState<User | null >(null);
   const [loading, setLoading] = useState(true);
 
   const updateUser = (user:User)=>{
     setUser(user)
   }
+  const logout = ()=>{
+    setUser(null)
+  }
 
   const getUser = async () => {
     try {
       setLoading(true);
-      const user = await authService.getUser();
-      // let user = await getItemFromSecureStore("user");
+      let user = await getItemFromSecureStore("campus-crib-user");
       // console.log("saved user", user);
       if (!user) {
+        const session = await authService.getUser();
+        
         console.log("user from db", user);
-
-        // if (user) {
-        //   await saveItemToSecureStore("user", null);
-        // }
+        if (user) {
+          await saveItemToSecureStore("campus-crib-user", user);
+        }
       }
-      // if (user) {
-      //   console.log("user", user);
-      //   setUser(user);
-      // }
+      if (user) {
+        setUser(user);
+      }
     } catch (error) {
       const err = error as Error;
       if (Platform.OS === "web") {

@@ -24,6 +24,14 @@ export const getItemFromSecureStore = async (key: string) => {
     return null;
   }
 };
+export const deleteItemFromSecureStore = async (key: string) => {
+  try {
+    await SecureStore.deleteItemAsync(key);
+    console.log(`Item with key "${key}" deleted successfully.`);
+  } catch (error) {
+    console.error("Error deleting item from Secure Store:", error);
+  }
+};
 export const userFormatter = (doc: Models.Document): User => {
   return {
     name: doc?.name,
@@ -33,6 +41,7 @@ export const userFormatter = (doc: Models.Document): User => {
     account_id: doc?.accountId,
     phone: doc?.phone,
     role: doc?.role,
+    level: doc?.level,
     favorites: doc?.favorites,
     $id: doc?.$id,
     $collectionId: doc?.$collectionId,

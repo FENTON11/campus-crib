@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import { View, Text, ScrollView, TouchableOpacity, Image, Platform, Alert, ActivityIndicator } from "react-native";
+import React, { useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -8,7 +8,25 @@ import { Link } from "expo-router";
 import { useAppContext } from "@/context/AppContext";
 import { authService } from "@/appwrite/authService";
 const Profile = () => {
-  const { user: currentUser } = useAppContext();
+  const { user: currentUser ,setUser} = useAppContext();
+  const [loading,setLoading] = useState(false)
+  const handleLogout = async()=>{
+    try {
+      setLoading(true)
+      await authService.logout()
+      setUser(null)
+    } catch (error) {
+      const err = error as Error;
+       if (Platform.OS === "web") {
+              alert("Error: " + (err?.message || "Failed to login"));
+            } else {
+              Alert.alert("Error", err?.message || "Failed to login");
+            }
+    }
+    finally{
+      setLoading(false)
+    }
+  }
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -142,14 +160,15 @@ const Profile = () => {
         </Link>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={async () => await authService.logout()}
-          className=' bg-gray-3 p2 rounded-lg flex-row items-center gap-4'
+          disabled={loading}
+          onPress={handleLogout}
+          className=' bg-gray-3 p2 rounded-lg flex-row items-center gap-4 disabled:bg-gray-500'
         >
           <View className=' flex-row gap-4 items-center p-4 flex-1  rounded-lg bg-primary-300/70'>
             <MaterialIcons name='logout' size={24} color='white' />
-            <Text className='  font-rubik-medium text-lg text-white'>
+           { loading ? <ActivityIndicator/>: <Text className='  font-rubik-medium text-lg text-white'>
               logout
-            </Text>
+            </Text>}
           </View>
         </TouchableOpacity>
       </View>
