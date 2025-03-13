@@ -1,3 +1,4 @@
+import { Ref } from "react";
 import { Models } from "react-native-appwrite";
 export type appwriteConfiguration = {
   appWriteEndPoint: string;
@@ -8,6 +9,8 @@ export type appwriteConfiguration = {
   appWriteUsersCollectionID: string;
   appWriteAgentCollectionID: string;
   appWriteReferencesCollectionID: string;
+  appWriteMessegesCollectionID: string;
+  appWriteRoomsCollectionID: string;
   appWritePlatform: string;
 };
 export interface User extends Models.Document {
@@ -19,6 +22,7 @@ export interface User extends Models.Document {
   level:number,
   phone?: number;
   role: "admin" | "normal" | "super_admin";
+  preferences:References;
 }
 export interface Agent extends Models.Document {
   properties: Property;
@@ -35,6 +39,11 @@ export interface References extends Models.Document {
   drinking: string;
   smoking: string;
   emergency_contact: string;
+}
+export interface IMessege {
+  text: string;
+  userId: string;
+  id: string;
 }
 export interface Property extends Models.Document {
   name: string;

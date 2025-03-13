@@ -44,12 +44,33 @@ export const userFormatter = (doc: Models.Document): User => {
     level: doc?.level,
     favorites: doc?.favorites,
     $id: doc?.$id,
+    preferences: doc?.preferences,
     $collectionId: doc?.$collectionId,
     $databaseId: doc?.$databaseId,
     $createdAt: doc?.$createdAt,
     $updatedAt: doc?.$updatedAt,
     $permissions: doc?.$permissions,
   };
+};
+export const usersFormatter = (docs: Models.Document[]): User[] => {
+  return docs.map(doc => ({
+    name: doc?.name,
+    username: doc?.username,
+    email: doc?.email,
+    avatar: doc?.avatar,
+    account_id: doc?.accountId,
+    phone: doc?.phone,
+    role: doc?.role,
+    level: doc?.level,
+    favorites: doc?.favorites,
+    $id: doc?.$id,
+    preferences: doc?.preferences,
+    $collectionId: doc?.$collectionId,
+    $databaseId: doc?.$databaseId,
+    $createdAt: doc?.$createdAt,
+    $updatedAt: doc?.$updatedAt,
+    $permissions: doc?.$permissions,
+  }))
 };
 export const propertyFormatter = (doc: Models.Document): Property => {
   return {
@@ -95,5 +116,6 @@ export const propertiesFormatter = (docs: Models.Document[]): Property[] => {
     $createdAt: doc?.$createdAt,
     $updatedAt: doc?.$updatedAt,
     $permissions: doc?.$permissions,
+    
   }));
 };

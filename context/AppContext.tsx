@@ -44,8 +44,7 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
       let user = await getItemFromSecureStore("campus-crib-user");
       // console.log("saved user", user);
       if (!user) {
-        const session = await authService.getUser();
-        
+        const user = await authService.getUser();
         console.log("user from db", user);
         if (user) {
           await saveItemToSecureStore("campus-crib-user", user);

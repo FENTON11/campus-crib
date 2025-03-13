@@ -35,7 +35,7 @@ const Search = () => {
     >
       <View className='flex-1 flex flex-row items-center justify-start z-50'>
         <TouchableOpacity onPress={handleSearch}>
-          <Image source={icons.search} className='size-5 object-contain' />
+          <Image source={icons.search} className='size-9 object-contain' />
         </TouchableOpacity>
         <TextInput
           placeholder='Search for houses'
@@ -50,9 +50,9 @@ const Search = () => {
           <AntDesign name='closecircle' size={22} color='#8C8E98' />
         </TouchableOpacity>
       )}
-      <TouchableOpacity onPress={handleSearch}>
+     { <TouchableOpacity onPress={handleSearch}>
         <Image source={icons.filter} className='size-7' />
-      </TouchableOpacity>
+      </TouchableOpacity>}
     </View>
   );
 };

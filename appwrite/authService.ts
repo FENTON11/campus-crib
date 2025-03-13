@@ -12,6 +12,7 @@ import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import { User } from "@/typings";
 import { deleteItemFromSecureStore, userFormatter } from "@/lib";
+import { Models } from "appwrite";
 class AuthService {
   private client = new Client();
   private account;
@@ -91,29 +92,10 @@ class AuthService {
       if (savedUser) {
         return userFormatter(savedUser);
       }
-  
       // 🔹 Create a new user if not found
-      type TempUser = {
-        name: string,
-        email: string,
-        account_id:string,
-        avatar:URL,
-      }
-      const newUser: TempUser = {
-        name: account.name,
-        email: account.email,
-        account_id: account.$id,
-        avatar: this.avatars.getInitials(account.name),
-      };
-  
-      const res = await this.database.createDocument(
-        appwriteConfig.appWriteDatabase,
-        appwriteConfig.appWriteUsersCollectionID,
-        ID.unique(),
-        newUser
-      );
-        return userFormatter(res);
-  
+      const newSavedUser = await this.createUser(account);
+      return newSavedUser;
+
     } catch (error) {
       console.error("Login error:", error);
       
@@ -132,6 +114,56 @@ class AuthService {
       return false;
     }
   }
+  async createUser(account:Models.User<Models.Preferences> ){
+    type TempUser = {
+      name: string,
+      email: string,
+      account_id:string,
+      avatar:URL,
+    }
+    const newUser: TempUser = {
+      name: account.name,
+      email: account.email,
+      account_id: account.$id,
+      avatar: this.avatars.getInitials(account.name),
+    };
+
+    const res = await this.database.createDocument(
+      appwriteConfig.appWriteDatabase,
+      appwriteConfig.appWriteUsersCollectionID,
+      ID.unique(),
+      newUser
+    );
+      return userFormatter(res);
+  }
+  async loginWithCredentials({email,password}:{email:string,password:string}) {
+    try {
+      console.log('Trying to login with credentials');
+      const arleadyExists = await this.getUserByEmailAdrress(email);
+      if(arleadyExists){
+        const session = await  this.account.createEmailPasswordSession(email, password);
+        if(!session) throw new Error("Invalid Password")
+          const user = await this.getUser();
+        if(user){
+          return userFormatter(user)
+        }
+      }
+      
+       // 🔹 Create a new user if not found
+       const account = await this.getSession();
+       console.log('account:',account);
+       
+       if (!account) throw new Error("Failed to retrieve user");
+       const newSavedUser = await this.createUser(account);
+       console.log('newSavedUser:',newSavedUser);
+       
+       return newSavedUser;
+    } catch (error) {
+      throw error
+      console.error(error);
+      return null;
+    }
+  }
   async getSession() {
     try {
       return await this.account.get();
@@ -146,6 +178,23 @@ class AuthService {
       if(session){
         const user = this.checkUser(session.$id)
         return user
+      }
+      return null
+    } catch (error) {
+      // console.error(error);
+      return null;
+    }
+  }
+  async getUserByEmailAdrress(email:string) {
+    try {
+      const res =  await this.database.listDocuments(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteUsersCollectionID,
+        [Query.equal('email',email)]
+      )
+      if(res.total > 0){
+
+        return  userFormatter(res.documents[0])
       }
       return null
     } catch (error) {

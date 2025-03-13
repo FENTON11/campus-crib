@@ -7,7 +7,8 @@ import {
   Storage,
 } from "react-native-appwrite";
 import { appwriteConfig } from "./appwriteConfig";
-import { propertiesFormatter } from "@/lib";
+import { propertiesFormatter, userFormatter, usersFormatter } from "@/lib";
+import { authService } from "./authService";
 class AppWriteService {
   private client = new Client();
   private database;
@@ -53,6 +54,21 @@ class AppWriteService {
         appwriteConfig.appWritePropertyCollectionID
       );
       return propertiesFormatter(res.documents);
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to get properties");
+    }
+  }
+  async getRoommates() {
+    try {
+      const user = await authService.getUser()
+      if(!user) throw new Error('you need to be logged in ')
+      const res = await this.database.listDocuments(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteUsersCollectionID,
+        [Query.notEqual('$id', user.$id)]
+      );
+      return usersFormatter(res.documents);
     } catch (error) {
       console.error(error);
       throw new Error("Failed to get properties");
@@ -146,6 +162,76 @@ class AppWriteService {
       }
     }
   }
+  async sendMessage(messege:any) {
+    try {
+      let newMessege = await this.database.createDocument(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteMessegesCollectionID,
+        ID.unique(),
+        messege
+      );
+      return newMessege;
+    } catch (error) {
+      const err = error as Error
+      throw new Error(err.message);
+    }
+  }
+  async getRoomMesseges(roomID:string) {
+    try {
+      let messeges = await this.database.listDocuments(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteMessegesCollectionID,
+        [Query.equal('room', roomID)]
+      );
+      return messeges.documents;
+    } catch (error) {
+      const err = error as Error
+      throw new Error(err.message);
+    }
+  }
+  async getUserRooms(userID:string) {
+    try {
+      let rooms = await this.database.listDocuments(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteRoomsCollectionID,
+        [Query.contains('members', userID)]
+      );
+      return rooms.documents;
+    } catch (error) {
+      const err = error as Error
+      throw new Error(err.message);
+    }
+  }
+  async createRoom(members: string[]) {
+    try {
+      let room = await this.database.listDocuments(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteRoomsCollectionID,
+        [
+          Query.contains('members', members[0]),
+          Query.contains('members', members[1]),
+        ]
+      );
+      if (room.total === 0) {
+        const newRoom = await this.database.createDocument(
+          appwriteConfig.appWriteDatabase,
+          appwriteConfig.appWriteRoomsCollectionID,
+          ID.unique(),
+          { members }
+        );
+        console.log('created a new room');
+        return { created: true, room: newRoom };
+      } else {
+        console.log('room alreday exists');
+        return { created: false, room: room.documents[0] };
+      }
+    } catch (error) {
+      const err = error as Error
+      throw new Error(err.message);
+    
+    }
+  }
+
 }
 
 export const appwriteService = new AppWriteService();
