@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useAppContext } from "@/context/AppContext";
-import { Redirect, useRouter } from "expo-router";
+import { Link, Redirect, useRouter } from "expo-router";
 import { OAuthProvider } from "react-native-appwrite";
 import { authService } from "@/appwrite/authService";
 
@@ -18,12 +18,6 @@ const AuthScreen: React.FC = () => {
   const { user, updateUser } = useAppContext();
   const router = useRouter();
   const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (user) {
-      router.push(user.level >= 5 ? "/(root)/(tabs)/home" : "/(root)/(onboarding)/personal-info");
-    }
-  }, [user]);
 
   const handleSocialLogin = async (provider: OAuthProvider) => {
     setIsAuthenticating(true);
@@ -45,9 +39,7 @@ const AuthScreen: React.FC = () => {
     }
   };
 
-  if (user) {
-    return <Redirect href="/(root)/(tabs)/home" />;
-  }
+  
 
   return (
     <ScrollView>
@@ -95,6 +87,16 @@ const AuthScreen: React.FC = () => {
               />
               <Text className="font-rubik-medium text-lg text-primary-300">Sign in with Facebook</Text>
             </TouchableOpacity>
+               <View className='flex-row items-center my-4'>
+                        <View style={{ flex: 1, height: 1, backgroundColor: 'white' }} />
+                        <Text className='mx-2 text-white'>or sign in with</Text>
+                        <View style={{ flex: 1, height: 1, backgroundColor: 'white' }} />
+                      </View>
+            <Link href={'/(auth)/sign-in'}>
+        <Text className="text-center underline underline-offset-4 p-2 text-lg font-rubik-light text-white">
+          sign in with email and password
+        </Text>
+            </Link>
           </View>
         )}
         

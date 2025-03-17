@@ -17,6 +17,12 @@ export const appwriteConfig: appwriteConfiguration = {
   appWriteReferencesCollectionID: String(
     process.env.EXPO_PUBLIC_APPWRITE_REFERENCES_COLLECTION_ID
   ),
+  appWriteMessegesCollectionID: String(
+    process.env.EXPO_PUBLIC_APPWRITE_MESSEGES_COLLECTION_ID
+  ),
+  appWriteRoomsCollectionID: String(
+    process.env.EXPO_PUBLIC_APPWRITE_ROOMS_COLLECTION_ID
+  ),
   appWritePlatform: String(
     process.env.EXPO_PUBLIC_APPWRITE_PLATFORM
   ),
