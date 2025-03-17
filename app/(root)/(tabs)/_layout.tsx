@@ -12,7 +12,7 @@ const TabIcon = ({
   icon: ImageSourcePropType;
   title: string;
 }) => (
-  <View className='flex-1 mt-3 flex flex-col items-center'>
+  <View className='flex-1 flex flex-col items-center'>
     <Image
       source={icon}
       tintColor={focused ? "#0061FF" : "#666876"}
@@ -24,7 +24,7 @@ const TabIcon = ({
         focused
           ? "text-primary-300 font-rubik-medium"
           : "text-black-200 font-rubik"
-      } text-xs w-full text-center mt-1`}
+      } text-xs w-full text-center `}
     >
       {title}
     </Text>
@@ -38,13 +38,23 @@ const TabsLayout = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
+          marginHorizontal: 40,
+          borderRadius: 30,
+          marginVertical: 15,
+          display: "flex",
+          alignItems: "center",
           backgroundColor: "white",
-          position: "absolute",
-          borderTopColor: "#0061FF1A",
-          borderTopWidth: 1,
-          // height: 50,
-          minHeight: 70,
+          // position: "absolute",
+          // minHeight: 70,
         },
+        // tabBarStyle: {
+        //   backgroundColor: "white",
+        //   position: "absolute",
+        //   borderTopColor: "#0061FF1A",
+        //   borderTopWidth: 1,
+        //   // height: 50,
+        //   minHeight: 70,
+        // },
       }}
     >
       <Tabs.Screen

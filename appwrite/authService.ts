@@ -117,6 +117,29 @@ class AuthService {
       return false;
     }
   }
+  async createAccountWithCredentials({
+    email,
+    password,
+    username,
+  }: {
+    email: string;
+    password: string;
+    username: string;
+  }) {
+    try {
+      const account = await this.account.create(
+        ID.unique(),
+        email,
+        password,
+        username
+      );
+      if (!account) throw new Error("Failed to create account");
+      const user = await this.createUser(account);
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
   async createUser(account: Models.User<Models.Preferences>) {
     type TempUser = {
       name: string;
