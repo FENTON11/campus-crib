@@ -28,16 +28,15 @@ class AuthService {
   }
   checkUser = async (accountID: string) => {
     try {
-      const res =  await this.database.listDocuments(
+      const res = await this.database.listDocuments(
         appwriteConfig.appWriteDatabase,
         appwriteConfig.appWriteUsersCollectionID,
-        [Query.equal('account_id',accountID)]
-      )
-      if(res.total > 0){
-
-        return  userFormatter(res.documents[0])
+        [Query.equal("account_id", accountID)]
+      );
+      if (res.total > 0) {
+        return userFormatter(res.documents[0]);
       }
-      return null
+      return null;
     } catch (error) {
       return false;
     }
@@ -46,86 +45,90 @@ class AuthService {
   async login(provider: OAuthProvider) {
     try {
       const oldSession = await this.getSession();
-      if(oldSession){
-        console.log('arleady logged in');
-        return this.getUser()
-        
+      if (oldSession) {
+        console.log("arleady logged in");
+        return this.getUser();
       }
-      const successRedirect = Linking.createURL("/(root)/(onboarding)/personal-info");
+      const successRedirect = Linking.createURL(
+        "/(root)/(onboarding)/personal-info"
+      );
       const failureRedirect = Linking.createURL("/(auth)/auth");
       // 🔹 Get OAuth login URL with success & failure redirects
-      const authURL = await this.account.createOAuth2Token(provider, successRedirect, failureRedirect);
+      const authURL = this.account.createOAuth2Token(
+        provider,
+        successRedirect,
+        failureRedirect
+      );
       if (!authURL) throw new Error("Failed to get OAuth login URL");
-  
+
       // 🔹 Open OAuth session inside the app
-      const browserResult = await WebBrowser.openAuthSessionAsync(authURL.toString(), successRedirect);
-  
+      const browserResult = await WebBrowser.openAuthSessionAsync(
+        authURL.toString(),
+        successRedirect
+      );
+
       if (browserResult.type !== "success") {
         await WebBrowser.openBrowserAsync(failureRedirect);
         throw new Error("OAuth2 login failed");
       }
-  
+
       // 🔹 Capture OAuth response from deep link
       const url = new URL(browserResult.url);
       const secret = url.searchParams.get("secret");
       const userId = url.searchParams.get("userId");
-  
+
       if (!secret || !userId) {
         await WebBrowser.openBrowserAsync(failureRedirect);
         throw new Error("Invalid OAuth response");
       }
-  
+
       // 🔹 Create user session
       const session = await this.account.createSession(userId, secret);
       if (!session) throw new Error("Failed to create session");
-  
+
       // console.log("New session:", session);
       // 🔹 Get user data
       const account = await this.getSession();
       if (!account) throw new Error("Failed to retrieve user");
-  
+
       // console.log("account data:", account);
-  
+
       // 🔹 Check if user exists in database
       const savedUser = await this.checkUser(account.$id);
       if (savedUser) {
         return userFormatter(savedUser);
       }
-  
+
       // 🔹 Create a new user if not found
       type TempUser = {
-        name: string,
-        email: string,
-        account_id:string,
-        avatar:URL,
-      }
+        name: string;
+        email: string;
+        account_id: string;
+        avatar: URL;
+      };
       const newUser: TempUser = {
         name: account.name,
         email: account.email,
         account_id: account.$id,
         avatar: this.avatars.getInitials(account.name),
       };
-  
+
       const res = await this.database.createDocument(
         appwriteConfig.appWriteDatabase,
         appwriteConfig.appWriteUsersCollectionID,
         ID.unique(),
         newUser
       );
-        return userFormatter(res);
-  
+      return userFormatter(res);
     } catch (error) {
       console.error("Login error:", error);
-      
     }
   }
-  
 
-  
   async logout() {
     try {
       await this.account.deleteSession("current");
-      await deleteItemFromSecureStore("campus-crib-user")
+      await deleteItemFromSecureStore("campus-crib-user");
       return true;
     } catch (error) {
       // console.error(error);
@@ -143,11 +146,11 @@ class AuthService {
   async getUser() {
     try {
       const session = await this.getSession();
-      if(session){
-        const user = this.checkUser(session.$id)
-        return user
+      if (session) {
+        const user = this.checkUser(session.$id);
+        return user;
       }
-      return null
+      return null;
     } catch (error) {
       // console.error(error);
       return null;
