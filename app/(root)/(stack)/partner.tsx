@@ -69,7 +69,7 @@ const Partner = () => {
         </Text>
         <Text className='text-base text-gray-600 mt-2 text-center p-2'>
           Join our elite team and unlock your potential in the real estate
-          industry. Help clients find their dream homes and build a successful
+          industry. We help clients find their dream homes and build a successful
           career.
         </Text>
         <Image
