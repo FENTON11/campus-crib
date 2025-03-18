@@ -264,19 +264,7 @@ class AppWriteService {
       throw new Error("Failed to get property");
     }
   }
-  async getProperty({id}:{id: string}) {
-    try {
-      const res = await this.database.getDocument(
-        appwriteConfig.appWriteDatabase,
-        appwriteConfig.appWritePropertyCollectionID,
-        id
-      );
-      return propertiesFormatter([res]);
-    } catch (error) {
-      console.error(error);
-      throw new Error("Failed to get property");
-    }
-  }
+  
 
 }
 
