@@ -21,7 +21,7 @@ import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 const ListHeader = () => {
   const { user } = useAppContext();
-  const greatings = greetingUser();
+  const greetings = greetingUser();
   const [featured, setFeatured] = useState<Property[]>([]);
   const getData = async () => {
     return await appwriteService.getFeaturedProperties();
@@ -46,7 +46,7 @@ const ListHeader = () => {
           />
           <View className='flex flex-col items-start ml-2 justify-center'>
             <Text className='text-lg font-rubik text-black-100'>
-              {greatings}
+              {greetings}
             </Text>
             <Text className='text-xl font-rubik-medium text-black-300 capitalize'>
               {user?.name || "Guest"}
@@ -54,7 +54,7 @@ const ListHeader = () => {
           </View>
         </View>
         <View className=' flex-row gap-4 items-center'>
-          <Link asChild href={"/(root)/(stack)/notifications"}>
+          <Link asChild href={"/(root)/(stack)/Notification"}>
             <TouchableOpacity>
               <Image source={icons.bell} className=' size-7' />
             </TouchableOpacity>
