@@ -63,12 +63,12 @@ const AgentsTabLayout = () => {
           // minHeight: 70,
         },
         tabBarStyle: {
-          marginHorizontal: 20,
-
+          marginHorizontal: 40,
           borderRadius: 30,
-          marginVertical: 10,
+          marginVertical: 15,
           display: "flex",
-          backgroundColor: "gray",
+          alignItems: "center",
+          backgroundColor: "white",
 
           // position: "absolute",
           // minHeight: 70,

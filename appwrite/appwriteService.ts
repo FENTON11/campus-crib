@@ -11,6 +11,7 @@ import {
   chatRoomsFormatter,
   messagesFormatter,
   propertiesFormatter,
+  propertyFormatter,
   singleMessageFormatter,
   userFormatter,
   usersFormatter,
@@ -251,21 +252,19 @@ class AppWriteService {
       throw new Error(err.message);
     }
   }
-  async getProperty({id}:{id: string}) {
+  async getProperty({ id }: { id: string }) {
     try {
       const res = await this.database.getDocument(
         appwriteConfig.appWriteDatabase,
         appwriteConfig.appWritePropertyCollectionID,
         id
       );
-      return propertiesFormatter([res]);
+      return propertyFormatter(res);
     } catch (error) {
       console.error(error);
       throw new Error("Failed to get property");
     }
   }
-  
-
 }
 
 export const appwriteService = new AppWriteService();

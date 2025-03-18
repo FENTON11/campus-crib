@@ -3,6 +3,7 @@ import React from "react";
 import images from "@/constants/images";
 import icons from "@/constants/icons";
 import { Property } from "@/typings";
+import { useRouter } from "expo-router";
 interface Props {
   onPress?: () => void;
 }
@@ -42,8 +43,14 @@ export const FeaturedCard = ({ price, name, location }: Property) => {
   );
 };
 
-export const Card = ({ price, name, location }: Property) => {
-  const onPress = () => {};
+export const Card = ({ price, name, location, $id }: Property) => {
+  const router = useRouter();
+  const onPress = () => {
+    router.push({
+      pathname: "/(root)/(stack)/property-details/[id]",
+      params: { id: $id },
+    });
+  };
   return (
     <TouchableOpacity
       activeOpacity={0.5}
