@@ -3,7 +3,6 @@ import { View, Text, FlatList, TouchableOpacity, Animated } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import { GestureHandlerRootView, Swipeable } from "react-native-gesture-handler";
-import Reanimated, { Easing, useSharedValue, withTiming } from "react-native-reanimated";
 
 const Notification = () => {
   interface Notification {
