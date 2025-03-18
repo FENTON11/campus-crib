@@ -4,6 +4,8 @@ import images from "@/constants/images";
 import icons from "@/constants/icons";
 import { Property } from "@/typings";
 import { useRouter } from "expo-router";
+import { AntDesign, Feather } from "@expo/vector-icons";
+import { useAppContext } from "@/context/AppContext";
 interface Props {
   onPress?: () => void;
 }
@@ -43,8 +45,20 @@ export const FeaturedCard = ({ price, name, location }: Property) => {
   );
 };
 
-export const Card = ({ price, name, location, $id }: Property) => {
+interface CardProps extends Property {
+  showMore?: boolean;
+}
+export const Card = ({
+  price,
+  name,
+  location,
+  $id,
+  showMore,
+  agent,
+}: CardProps) => {
   const router = useRouter();
+  const { user } = useAppContext();
+  const show = showMore && user?.$id === agent.user.$id ? true : false;
   const onPress = () => {
     router.push({
       pathname: "/(root)/(stack)/property-details/[id]",
@@ -79,6 +93,16 @@ export const Card = ({ price, name, location, $id }: Property) => {
             tintColor='#191d31'
           />
         </View>
+        {show && (
+          <View className=' py-2 flex-row justify-between items-center'>
+            <TouchableOpacity className='' activeOpacity={0.5}>
+              <AntDesign name='delete' size={20} color='#ef4444' />
+            </TouchableOpacity>
+            <TouchableOpacity className='' activeOpacity={0.5}>
+              <Feather name='edit' size={20} color='#0061FF' />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );

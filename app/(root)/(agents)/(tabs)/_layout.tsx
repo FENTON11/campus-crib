@@ -12,9 +12,38 @@ import {
 import {
   AntDesign,
   MaterialCommunityIcons,
+  MaterialIcons,
   Octicons,
 } from "@expo/vector-icons";
-import TabBar from "@/components/tabBar/TabBar";
+import icons from "@/constants/icons";
+
+const TabIcon = ({
+  focused,
+  icon,
+  title,
+}: {
+  focused: boolean;
+  icon: ImageSourcePropType;
+  title: string;
+}) => (
+  <View className='flex-1 flex gap-1 flex-col items-center '>
+    <Image
+      source={icon}
+      tintColor={focused ? "#0061FF" : "#666876"}
+      resizeMode='contain'
+      className={`${focused ? "size-6" : "size-6"} `}
+    />
+    <Text
+      className={` ${
+        focused
+          ? "text-primary-300 font-rubik-medium"
+          : "text-black-200 font-rubik"
+      } text-xs w-full text-center `}
+    >
+      {title}
+    </Text>
+  </View>
+);
 
 interface TabButtonProps extends TouchableOpacityProps {
   focused: boolean;
@@ -47,7 +76,6 @@ const TabButton: React.FC<TabButtonProps> = ({
 const AgentsTabLayout = () => {
   return (
     <Tabs
-      // tabBar={(props) => <TabBar {...props} key={props.state.index} />}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -63,10 +91,11 @@ const AgentsTabLayout = () => {
           // minHeight: 70,
         },
         tabBarStyle: {
-          marginHorizontal: 40,
+          marginHorizontal: 35,
           borderRadius: 30,
           marginVertical: 15,
           display: "flex",
+          padding: 10,
           alignItems: "center",
           backgroundColor: "white",
 
@@ -79,10 +108,10 @@ const AgentsTabLayout = () => {
         name='overview'
         options={{
           tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name='home-analytics'
-              size={focused ? 25 : 23}
-              color={focused ? "#0061FF" : "#52555A"}
+            <TabIcon
+              focused={focused}
+              icon={icons.dashboard}
+              title='Dashboard'
             />
           ),
         }}
@@ -91,11 +120,7 @@ const AgentsTabLayout = () => {
         name='create'
         options={{
           tabBarIcon: ({ focused }) => (
-            <AntDesign
-              name='pluscircleo'
-              size={focused ? 25 : 23}
-              color={focused ? "#0061FF" : "#52555A"}
-            />
+            <TabIcon focused={focused} icon={icons.add} title='Create' />
           ),
         }}
       />
@@ -104,10 +129,10 @@ const AgentsTabLayout = () => {
         name='properties'
         options={{
           tabBarIcon: ({ focused }) => (
-            <Octicons
-              name='home'
-              size={focused ? 25 : 23}
-              color={focused ? "#0061FF" : "#52555A"}
+            <TabIcon
+              focused={focused}
+              icon={icons.home}
+              title='my Properties'
             />
           ),
         }}

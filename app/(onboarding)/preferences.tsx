@@ -105,7 +105,7 @@ const Preferences = () => {
       />
       <TouchableOpacity
         activeOpacity={0.2}
-        onPress={() => router.push("/(onboarding)/acadamic")}
+        // onPress={() => router.push("/(onboarding)/acadamic")}
         className={`p-4 mt-11 rounded-3xl ${
           isButtonDisabled ? "bg-gray-400" : "bg-primary-300/80"
         }`}

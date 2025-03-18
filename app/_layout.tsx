@@ -1,6 +1,7 @@
+import { PaperProvider } from "react-native-paper";
 import React, { useEffect } from "react";
 import { SplashScreen, Stack } from "expo-router";
-import {useFonts} from "expo-font";
+import { useFonts } from "expo-font";
 import "./global.css";
 import AppContextProvider from "@/context/AppContext";
 export default function RootLayout() {
@@ -23,8 +24,10 @@ export default function RootLayout() {
     return null;
   }
   return (
+    <PaperProvider>
       <AppContextProvider>
-       <Stack screenOptions={{headerShown:false}}/>
+        <Stack screenOptions={{ headerShown: false }} />
       </AppContextProvider>
+    </PaperProvider>
   );
 }

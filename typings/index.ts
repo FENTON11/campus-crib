@@ -21,6 +21,7 @@ export interface User extends Models.Document {
   favorites: string[];
   level: number;
   phone?: number;
+  isAgent: boolean;
   role: "admin" | "normal" | "super_admin";
   preferences: References;
 }

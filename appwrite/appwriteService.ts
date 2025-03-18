@@ -68,6 +68,19 @@ class AppWriteService {
       throw new Error("Failed to get properties");
     }
   }
+  async getAgentProperties(agentID: string) {
+    try {
+      const res = await this.database.listDocuments(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWritePropertyCollectionID,
+        [Query.equal("agent", agentID)]
+      );
+      return propertiesFormatter(res.documents);
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to get properties");
+    }
+  }
   async getRoommates() {
     try {
       const user = await authService.getUser();
@@ -217,6 +230,38 @@ class AppWriteService {
         appwriteConfig.appWriteDatabase,
         appwriteConfig.appWriteUsersCollectionID,
         userID
+      );
+      return userFormatter(res);
+    } catch (error) {
+      const err = error as Error;
+      throw new Error(err.message);
+    }
+  }
+  async becomeAnAgent({
+    userID,
+    agentType,
+  }: {
+    userID: string;
+    agentType: string;
+  }) {
+    try {
+      const user = await this.database.listDocuments(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteAgentCollectionID,
+        [Query.equal("user", userID)]
+      );
+      if (user) throw new Error("you are already an agent🙌🙌");
+      await this.database.createDocument(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteAgentCollectionID,
+        ID.unique(),
+        { type: agentType, user: userID }
+      );
+      const res = await this.database.updateDocument(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appWriteUsersCollectionID,
+        userID,
+        { isAgent: true }
       );
       return userFormatter(res);
     } catch (error) {

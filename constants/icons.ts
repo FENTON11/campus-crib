@@ -32,6 +32,8 @@ import wifi from "@/assets/icons/wifi.png";
 import location from "@/assets/icons/location.png";
 import edit from "@/assets/icons/edit.png";
 import roommate from "@/assets/icons/roommate.png";
+import add from "@/assets/icons/add.png";
+import dashboard from "@/assets/icons/dashboard.png";
 export default {
   google,
   home,
@@ -52,6 +54,8 @@ export default {
   rightArrow,
   send,
   bed,
+  add,
+  dashboard,
   bath,
   area,
   chat,
@@ -66,5 +70,5 @@ export default {
   wifi,
   location,
   edit,
- roommate,
+  roommate,
 };
