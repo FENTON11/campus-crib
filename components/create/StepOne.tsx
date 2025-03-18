@@ -1,10 +1,11 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
+import AgentProductSelector from "../agentProductSelector";
 
 const StepOne = () => {
   return (
     <View>
-      <Text>StepOne</Text>
+      <AgentProductSelector />
     </View>
   );
 };

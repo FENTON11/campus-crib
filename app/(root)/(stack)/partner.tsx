@@ -14,6 +14,7 @@ import {
 import { appwriteService } from "@/appwrite/appwriteService";
 import { useAppContext } from "@/context/AppContext";
 import { useRouter } from "expo-router";
+import { saveItemToSecureStore } from "@/lib";
 
 const Partner = () => {
   const [type, setType] = useState("");
@@ -32,6 +33,7 @@ const Partner = () => {
         agentType: type,
       });
       updateUser(res);
+      saveItemToSecureStore("campus-crib-user", res);
     } catch (error) {
       const err = error as Error;
       Platform.OS === "web"

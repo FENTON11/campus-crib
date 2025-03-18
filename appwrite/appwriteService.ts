@@ -250,7 +250,7 @@ class AppWriteService {
         appwriteConfig.appWriteAgentCollectionID,
         [Query.equal("user", userID)]
       );
-      if (user) throw new Error("you are already an agent🙌🙌");
+      if (user.total > 0) throw new Error("you are already an agent🙌🙌");
       await this.database.createDocument(
         appwriteConfig.appWriteDatabase,
         appwriteConfig.appWriteAgentCollectionID,
