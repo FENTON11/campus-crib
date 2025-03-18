@@ -1,10 +1,24 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  TouchableWithoutFeedback,
+} from "react-native";
 import React, { useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
-const AgentProductSelector = () => {
-  const [images, setImages] = useState<ImagePicker.ImagePickerAsset[]>([]);
+const AgentProductSelector = ({
+  images,
+  setImages,
+}: {
+  images: ImagePicker.ImagePickerAsset[];
+  setImages: React.Dispatch<
+    React.SetStateAction<ImagePicker.ImagePickerAsset[]>
+  >;
+}) => {
+  // const [images, setImages] = useState<ImagePicker.ImagePickerAsset[]>([]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -24,23 +38,21 @@ const AgentProductSelector = () => {
 
   return (
     <View className='p-2 gap-2'>
-      <TouchableOpacity
-        activeOpacity={0.3}
-        className='relative w-full flex-row'
-      >
+      <TouchableWithoutFeedback className='relative w-full flex-row'>
         {images[0] ? (
-          <View style={{ position: "relative" }}>
+          <View style={{ position: "relative" }} className=' w-full'>
             <Image
               source={{ uri: images[0].uri }}
-              style={{ flex: 1, height: 250 }}
+              style={{ height: 250 }}
               resizeMode='cover'
-              className='rounded-xl w-full'
+              className='rounded-xl w-full '
             />
             <TouchableOpacity
               onPress={() => removeImage(0)}
-              style={{ position: "absolute", top: 10, right: 10 }}
+              className='bg-gray-400 rounded-full'
+              style={{ position: "absolute", top: 5, right: 5 }}
             >
-              <MaterialIcons name='close' size={24} color='red' />
+              <MaterialIcons name='close' size={24} color='white' />
             </TouchableOpacity>
           </View>
         ) : (
@@ -51,20 +63,20 @@ const AgentProductSelector = () => {
             <Text className='text-gray-400'>click to select product image</Text>
           </TouchableOpacity>
         )}
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
       <View className='flex flex-row gap-2 p-2 flex-wrap'>
         {images
           .filter((_, index) => index > 0)
           .map((image, index) => (
             <View key={index} style={{ position: "relative" }}>
-              <TouchableOpacity activeOpacity={0.3}>
+              <TouchableWithoutFeedback>
                 <Image
                   source={{ uri: image.uri }}
                   style={{ width: 100, height: 100 }}
                   resizeMode='cover'
                   className='rounded-xl w-full shrink-0'
                 />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
               <TouchableOpacity
                 onPress={() => removeImage(index + 1)}
                 className=' absolute z-10 top-1  right-1 bg-black-100 rounded-full'
