@@ -19,10 +19,10 @@ export interface User extends Models.Document {
   avatar: URL;
   account_id: string;
   favorites: string[];
-  level:number,
+  level: number;
   phone?: number;
   role: "admin" | "normal" | "super_admin";
-  preferences:References;
+  preferences: References;
 }
 export interface Agent extends Models.Document {
   properties: Property;
@@ -40,10 +40,17 @@ export interface References extends Models.Document {
   smoking: string;
   emergency_contact: string;
 }
-export interface IMessege {
+export interface IMessege extends Models.Document {
   text: string;
-  userId: string;
-  id: string;
+  sender: User;
+  receiver: User;
+  room: IChatRoom;
+  pushNotification: boolean;
+  status: "sent" | "unsent" | "read" | "unread";
+}
+export interface IChatRoom extends Models.Document {
+  members: string[];
+  last_Message: string;
 }
 export interface Property extends Models.Document {
   name: string;
@@ -88,4 +95,11 @@ export type Field = {
 export type Step = {
   label: string;
   fields: Field[];
+};
+export type NewMessage = {
+  text: string;
+  sender: string;
+  receiver: string;
+  room: string;
+  status: "sent" | "unsent" | "read" | "unread";
 };

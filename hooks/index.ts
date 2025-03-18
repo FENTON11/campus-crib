@@ -44,12 +44,8 @@ export const useCustomFetch = <T>(
       setData(res);
     } catch (error) {
       const err = error as Error;
-      Platform.OS === "android"
-        ? ToastAndroid.showWithGravity(
-            err.message || "Something went wrong. Try again later",
-            ToastAndroid.TOP,
-            ToastAndroid.SHORT
-          )
+      Platform.OS === "web"
+        ? alert(err.message || "Something went wrong. Try again later")
         : Alert.alert(
             "Error",
             err.message || "Something went wrong. Try again later"

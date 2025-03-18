@@ -12,11 +12,16 @@ import icons from "@/constants/icons";
 import Search from "@/components/Search";
 import { FeaturedCard } from "./Cards";
 import Filters from "@/components/Filters";
-import NoResults from "./NoResults";
 import { useCustomFetch } from "@/hooks";
 import { appwriteService } from "@/appwrite/appwriteService";
 import { Property } from "@/typings";
+import { useAppContext } from "@/context/AppContext";
+import { greetingUser } from "@/lib";
+import { Feather } from "@expo/vector-icons";
+import { Link } from "expo-router";
 const ListHeader = () => {
+  const { user } = useAppContext();
+  const greatings = greetingUser();
   const [featured, setFeatured] = useState<Property[]>([]);
   const getData = async () => {
     return await appwriteService.getFeaturedProperties();
@@ -35,19 +40,31 @@ const ListHeader = () => {
     <View className='px-5'>
       <View className='flex flex-row items-center justify-between mt-5'>
         <View className='flex flex-row items-center'>
-          <Image source={Images.avatar} className='rounded-full' />
+          <Image
+            source={{ uri: user?.avatar.toString() }}
+            className='rounded-full size-16'
+          />
           <View className='flex flex-col items-start ml-2 justify-center'>
             <Text className='text-lg font-rubik text-black-100'>
-              Good Morning
+              {greatings}
             </Text>
-            <Text className='text-xl font-rubik-medium text-black-300'>
-              Fenton
+            <Text className='text-xl font-rubik-medium text-black-300 capitalize'>
+              {user?.name || "Guest"}
             </Text>
           </View>
         </View>
-        <TouchableOpacity>
-          <Image source={icons.bell} />
-        </TouchableOpacity>
+        <View className=' flex-row gap-4 items-center'>
+          <Link asChild href={"/(root)/(stack)/notifications"}>
+            <TouchableOpacity>
+              <Image source={icons.bell} className=' size-7' />
+            </TouchableOpacity>
+          </Link>
+          <Link asChild href={"/(root)/(stack)/messeger"}>
+            <TouchableOpacity>
+              <Feather name='send' size={24} color='black' />
+            </TouchableOpacity>
+          </Link>
+        </View>
       </View>
 
       <Search />
