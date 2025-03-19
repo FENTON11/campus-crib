@@ -116,3 +116,15 @@ export type Amenity = {
     | "MaterialCommunityIcons"
     | "Feather";
 };
+
+export interface INotification {
+  type: { target: string; type: string; ALLOW_DUPLICATE: boolean };
+  postID?: string;
+  senderID: string;
+  receiverID: string;
+  username: string;
+  messege: string;
+  id: string;
+  read: boolean;
+  createAt: Date;
+}
