@@ -271,6 +271,8 @@ class AppWriteService {
   }
   async createRoom(members: string[]) {
     try {
+      console.log(members);
+      
       let room = await this.database.listDocuments(
         appwriteConfig.appWriteDatabase,
         appwriteConfig.appWriteRoomsCollectionID,

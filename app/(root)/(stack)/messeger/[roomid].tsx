@@ -16,14 +16,14 @@ import { useCustomFetch } from "@/hooks";
 const Conversation = () => {
   const [messages, setMessages] = useState<IMessege[]>([]);
   const params = useLocalSearchParams();
-  const { username, recieverID, roomID, avatar } = params as {
+  const { username, recieverID, roomid, avatar } = params as {
     username: string;
     recieverID: string;
-    roomID: string;
+    roomid: string;
     avatar: string;
   };
   const getRoomChats = async () => {
-    return await appwriteService.getRoomMesseges(roomID);
+    return await appwriteService.getRoomMesseges(roomid);
   };
   const { loading, data } = useCustomFetch(getRoomChats);
   useEffect(() => {
@@ -48,7 +48,7 @@ const Conversation = () => {
         />
         <Chats chats={messages} />
         <ChatsFooter
-          roomID={roomID}
+          roomID={roomid}
           receiverID={recieverID}
           setMessages={setMessages}
         />

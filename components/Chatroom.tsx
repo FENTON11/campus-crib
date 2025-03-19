@@ -19,9 +19,9 @@ const Chatroom = ({ $id, members }: IChatRoom) => {
   const otherUserID = members.find((item) => item !== user?.$id);
   const startCon = () => {
     router.push({
-      pathname: `/(root)/(stack)/messeger/[roomID]`,
+      pathname: `/(root)/(stack)/messeger/[roomid]`,
       params: {
-        roomID: $id,
+        roomid: $id,
         username: otherUser?.name,
         receiverID: otherUser?.$id,
         avatar: otherUser?.avatar.toString(),
