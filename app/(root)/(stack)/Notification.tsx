@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, Animated } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import { GestureHandlerRootView, Swipeable } from "react-native-gesture-handler";
+import EmptyState from "@/components/Emptystate";
 
 const Notification = () => {
   interface Notification {
@@ -42,7 +43,9 @@ const Notification = () => {
         },
       ];
       setNotifications(data);
-      playNotificationSound();
+      if (data.length > 0) {
+        playNotificationSound();
+      }
     };
 
     fetchNotifications();
@@ -104,27 +107,31 @@ const Notification = () => {
     <GestureHandlerRootView className="flex-1 bg-gray-100 p-4">
       <Text className="text-2xl font-rubik-bold mb-4">Notifications</Text>
 
-      <FlatList
-        data={notifications}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <Swipeable renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, item.id)}>
-            <TouchableOpacity
-              className={`flex-row items-center p-4 bg-white rounded-lg shadow-md mb-3 ${
-                item.read ? "opacity-60" : ""
-              }`}
-              onPress={() => markAsRead(item.id)}
-            >
-              <View className="mr-4">{renderIcon(item.type)}</View>
-              <View className="flex-1">
-                <Text className="text-lg font-rubik-medium">{item.message}</Text>
-                <Text className="text-gray-500 text-sm">{item.time}</Text>
-              </View>
-              {!item.read && <View className="w-3 h-3 bg-red-500 rounded-full" />}
-            </TouchableOpacity>
-          </Swipeable>
-        )}
-      />
+      {notifications.length === 0 ? (
+        <EmptyState /> 
+      ) : (
+        <FlatList
+          data={notifications}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Swipeable renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, item.id)}>
+              <TouchableOpacity
+                className={`flex-row items-center p-4 bg-white rounded-lg shadow-md mb-3 ${
+                  item.read ? "opacity-60" : ""
+                }`}
+                onPress={() => markAsRead(item.id)}
+              >
+                <View className="mr-4">{renderIcon(item.type)}</View>
+                <View className="flex-1">
+                  <Text className="text-lg font-rubik-medium">{item.message}</Text>
+                  <Text className="text-gray-500 text-sm">{item.time}</Text>
+                </View>
+                {!item.read && <View className="w-3 h-3 bg-red-500 rounded-full" />}
+              </TouchableOpacity>
+            </Swipeable>
+          )}
+        />
+      )}
     </GestureHandlerRootView>
   );
 };
