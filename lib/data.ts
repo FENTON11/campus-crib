@@ -1,45 +1,128 @@
-export const galleryImages = [
-    "https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://unsplash.com/photos/comfort-room-with-white-bathtub-and-brown-wooden-cabinets-CMejBwGAdGk",
-    "https://images.unsplash.com/photo-1638799869566-b17fa794c4de?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1560185009-dddeb820c7b7?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1641910532059-ad684fd3049c?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1621293954908-907159247fc8?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1604328702728-d26d2062c20b?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1600435335786-d74d2bb6de37?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1635108198979-9806fdf275c6?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  ];
-  
-  export const agentImages = [
-    "https://images.unsplash.com/photo-1691335053879-02096d6ee2ca?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1544723495-432537d12f6c?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1542507464418-09c375b86bbe?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  ];
-  
-  export const reviewImages = [
-    "https://images.unsplash.com/photo-1517331671191-ddc2c6d3ebd1?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1474176857210-7287d38d27c6?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1511551203524-9a24350a5771?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  ];
-  
-  export const propertiesImages = [
-    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1605146768851-eda79da39897?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1561753757-d8880c5a3551?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1551241090-67de81d3541c?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1697299262049-e9b5fa1e9761?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1719299225324-301bad5c333c?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1582063289852-62e3ba2747f8?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1516095901529-0ef7be431a4f?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1600585153490-76fb20a32601?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1605276373954-0c4a0dac5b12?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1720432972486-2d53db5badf0?q=60&w=640&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  ];
+import { Amenity } from "@/typings";
+import { z } from "zod";
+
+export const amenitiesList: Amenity[] = [
+  { id: 1, name: "Wi-Fi", icon: "wifi", iconSet: "Ionicons" },
+  { id: 2, name: "Parking", icon: "local-parking", iconSet: "MaterialIcons" },
+  { id: 3, name: "Pool", icon: "pool", iconSet: "MaterialIcons" },
+  { id: 4, name: "Gym", icon: "sports-gymnastics", iconSet: "MaterialIcons" }, // Corrected icon
+  { id: 5, name: "AC", icon: "snowflake-o", iconSet: "FontAwesome" },
+  {
+    id: 6,
+    name: "Laundry",
+    icon: "washing-machine",
+    iconSet: "MaterialCommunityIcons",
+  },
+  {
+    id: 7,
+    name: "Elevator",
+    icon: "elevator",
+    iconSet: "MaterialCommunityIcons",
+  },
+  { id: 8, name: "Pet-Friendly", icon: "paw", iconSet: "FontAwesome" },
+  { id: 9, name: "Balcony", icon: "view-carousel", iconSet: "MaterialIcons" },
+  { id: 10, name: "Fireplace", icon: "fire", iconSet: "FontAwesome" },
+  { id: 11, name: "Security", icon: "security", iconSet: "MaterialIcons" },
+  {
+    id: 12,
+    name: "Furnished",
+    icon: "sofa",
+    iconSet: "MaterialCommunityIcons",
+  }, // Corrected icon
+  { id: 13, name: "Garden", icon: "tree", iconSet: "FontAwesome" },
+  { id: 14, name: "Playground", icon: "slideshow", iconSet: "MaterialIcons" },
+  {
+    id: 15,
+    name: "BBQ Area",
+    icon: "grill",
+    iconSet: "MaterialCommunityIcons",
+  },
+  { id: 16, name: "Sauna", icon: "hot-tub", iconSet: "MaterialIcons" },
+  { id: 17, name: "Concierge", icon: "bell", iconSet: "Feather" },
+  {
+    id: 18,
+    name: "Bike Storage",
+    icon: "bike",
+    iconSet: "MaterialCommunityIcons",
+  },
+  { id: 19, name: "Roof Terrace", icon: "deck", iconSet: "MaterialIcons" },
+  {
+    id: 20,
+    name: "Smart Home",
+    icon: "home-automation",
+    iconSet: "MaterialCommunityIcons",
+  },
+  { id: 21, name: "CCTV", icon: "cctv", iconSet: "MaterialCommunityIcons" },
+  { id: 22, name: "Library", icon: "book", iconSet: "FontAwesome" },
+  {
+    id: 23,
+    name: "Theater",
+    icon: "theater",
+    iconSet: "MaterialCommunityIcons",
+  },
+  { id: 24, name: "Jacuzzi", icon: "hot-tub", iconSet: "MaterialIcons" },
+  {
+    id: 25,
+    name: "Solar Panels",
+    icon: "solar-panel",
+    iconSet: "MaterialCommunityIcons",
+  },
+  {
+    id: 26,
+    name: "Wine Cellar",
+    icon: "glass-wine",
+    iconSet: "MaterialCommunityIcons",
+  },
+  {
+    id: 27,
+    name: "Home Office",
+    icon: "desktop-mac",
+    iconSet: "MaterialCommunityIcons",
+  },
+  {
+    id: 28,
+    name: "Game Room",
+    icon: "gamepad-variant",
+    iconSet: "MaterialCommunityIcons",
+  },
+  {
+    id: 29,
+    name: "Walk-in Closet",
+    icon: "wardrobe",
+    iconSet: "MaterialCommunityIcons",
+  },
+  {
+    id: 30,
+    name: "Central Heating",
+    icon: "radiator",
+    iconSet: "MaterialCommunityIcons",
+  },
+];
+
+export const schema = z.object({
+  name: z
+    .string({ message: "Property name is required" })
+    .min(3, "Property name cannot be less than 3 characters")
+    .max(2200, "Property name cannot be more than 2200 characters"),
+  price: z
+    .number({ message: "Property price is required" })
+    .min(1, "Property price cannot be less than 1"),
+  location: z.string({ message: "Property location is required" }),
+  bathrooms: z.number({ message: "Property bathrooms is required" }),
+  beds: z
+    .number({ message: "Property beds is required" })
+    .min(0, "Property beds cannot be less than 0")
+    .max(100, "Property beds cannot be more than 100"),
+  area: z
+    .number({ message: "Property area is required" })
+    .min(0, "Property area cannot be less than 0")
+    .max(20, "Property area cannot be more than 20"),
+  address: z
+    .string({ message: "Property address is required" })
+    .min(3, "Property address cannot be less than 3 characters")
+    .max(2200, "Property address cannot be more than 2200 characters"),
+  description: z
+    .string({ message: "Property description is required" })
+    .min(1, "Property description cannot be less than 1 character")
+    .max(2200, "Property description cannot be more than 2200 characters"),
+});
