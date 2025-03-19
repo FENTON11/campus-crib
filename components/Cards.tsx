@@ -6,11 +6,12 @@ import { Property } from "@/typings";
 import { useRouter } from "expo-router";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useAppContext } from "@/context/AppContext";
+import HeartIcon from "./HeartIcon";
 interface Props {
   onPress?: () => void;
 }
 
-export const FeaturedCard = ({ price, name, location }: Property) => {
+export const FeaturedCard = ({ price, name, location, $id }: Property & { $id: string }) => {
   const onPress = () => {};
   return (
     <TouchableOpacity
@@ -38,7 +39,8 @@ export const FeaturedCard = ({ price, name, location }: Property) => {
           <Text className='text-xl font-rubik-extrabold text-white'>
             $ {price}
           </Text>
-          <Image source={icons.heart} className='size-8' />
+          <HeartIcon house={{ id: $id, title: name, price, location, image: images.japan }} />
+          {/* <Image source={icons.heart} className='size-8' /> */}
         </View>
       </View>
     </TouchableOpacity>
@@ -87,11 +89,8 @@ export const Card = ({
           <Text className='text-base font-rubik-bold text-primary-300'>
             $ {price}
           </Text>
-          <Image
-            source={icons.heart}
-            className='size-8 mr-2'
-            tintColor='#191d31'
-          />
+          <HeartIcon house={{ id: $id, title: name, price, location, image: images.newYork }} />
+          {/* <Image source={icons.heart} className='size-8' /> */}
         </View>
         {show && (
           <View className=' py-2 flex-row justify-between items-center'>
