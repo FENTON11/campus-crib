@@ -1,38 +1,59 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
-# dependencies
-node_modules/
+# Dependencies
+client/node_modules/
+socket/node_modules/
 
-# Expo
-.expo/
-dist/
-web-build/
-expo-env.d.ts
+# Local environment files
+client/.env
+socket/.env
 
-# Native
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
+# Expo (if applicable)
+client/.expo/
+client/dist/
+client/web-build/
+client/expo-env.d.ts
 
-# Metro
-.metro-health-check*
+socket/.expo/
+socket/dist/
+socket/web-build/
+socket/expo-env.d.ts
 
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
+# Native (if applicable)
+client/*.orig.*
+client/*.jks
+client/*.p8
+client/*.p12
+client/*.key
+client/*.mobileprovision
+
+socket/*.orig.*
+socket/*.jks
+socket/*.p8
+socket/*.p12
+socket/*.key
+socket/*.mobileprovision
+
+# Metro (if applicable)
+client/.metro-health-check*
+socket/.metro-health-check*
+
+# Debug
+client/npm-debug.*
+client/yarn-debug.*
+client/yarn-error.*
+
+socket/npm-debug.*
+socket/yarn-debug.*
+socket/yarn-error.*
 
 # macOS
-.DS_Store
-*.pem
+client/.DS_Store
+client/*.pem
 
-# local env files
-.env*.local
+socket/.DS_Store
+socket/*.pem
 
-# typescript
-*.tsbuildinfo
-
-app-example
+# TypeScript (if applicable)
+client/*.tsbuildinfo
+socket/*.tsbuildinfo
