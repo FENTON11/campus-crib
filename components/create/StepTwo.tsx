@@ -1,40 +1,16 @@
 import React from "react";
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { View, Text, TextInput } from "react-native";
 import { z } from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { schema } from "@/lib/data";
 
-// Your provided schema
-const schema = z.object({
-  name: z
-    .string({ message: "Property name is required" })
-    .min(3, "Property name cannot be less than 3 characters")
-    .max(2200, "Property name cannot be more than 2200 characters"),
-  price: z
-    .number({ message: "Property price is required" })
-    .min(1, "Property price cannot be less than 1"),
-  location: z.string({ message: "Property location is required" }),
-  bathrooms: z.number({ message: "Property bathrooms is required" }),
-  beds: z
-    .number({ message: "Property beds is required" })
-    .min(0, "Property beds cannot be less than 0")
-    .max(100, "Property beds cannot be more than 100"),
-  area: z
-    .number({ message: "Property area is required" })
-    .min(0, "Property area cannot be less than 0")
-    .max(20, "Property area cannot be more than 20"),
-  address: z
-    .string({ message: "Property address is required" })
-    .min(3, "Property address cannot be less than 3 characters")
-    .max(2200, "Property address cannot be more than 2200 characters"),
-  description: z
-    .string({ message: "Property description is required" })
-    .min(1, "Property description cannot be less than 1 character")
-    .max(2200, "Property description cannot be more than 2200 characters"),
-});
+interface StepTwoProps {
+  onSubmit: (data: z.infer<typeof schema>) => void;
+  validationErrors: { [key: string]: string };
+}
 
-const StepTwo = () => {
+const StepTwo = ({ onSubmit, validationErrors }: StepTwoProps) => {
   const {
     control,
     handleSubmit,
@@ -52,10 +28,6 @@ const StepTwo = () => {
       description: "",
     },
   });
-
-  const onSubmit = (data: z.infer<typeof schema>) => {
-    console.log(data); // Handle form submission
-  };
 
   return (
     <View className='gap-6 flex-1 bg-gray-3 py-4 px-2'>
@@ -86,6 +58,11 @@ const StepTwo = () => {
             {errors.name.message}
           </Text>
         )}
+        {validationErrors.name && (
+          <Text className='text-red-500 font-poppins-regular text-sm'>
+            {validationErrors.name}
+          </Text>
+        )}
       </View>
 
       {/* Property Price Field */}
@@ -108,6 +85,11 @@ const StepTwo = () => {
         {errors.price && (
           <Text className='text-red-500 font-poppins-regular text-sm'>
             {errors.price.message}
+          </Text>
+        )}
+        {validationErrors.price && (
+          <Text className='text-red-500 font-poppins-regular text-sm'>
+            {validationErrors.price}
           </Text>
         )}
       </View>
@@ -133,6 +115,11 @@ const StepTwo = () => {
         {errors.location && (
           <Text className='text-red-500 font-poppins-regular text-sm'>
             {errors.location.message}
+          </Text>
+        )}
+        {validationErrors.location && (
+          <Text className='text-red-500 font-poppins-regular text-sm'>
+            {validationErrors.location}
           </Text>
         )}
       </View>
@@ -162,6 +149,11 @@ const StepTwo = () => {
               {errors.bathrooms.message}
             </Text>
           )}
+          {validationErrors.bathrooms && (
+            <Text className='text-red-500 font-poppins-regular text-sm'>
+              {validationErrors.bathrooms}
+            </Text>
+          )}
         </View>
 
         {/* Property Beds Field */}
@@ -186,6 +178,11 @@ const StepTwo = () => {
           {errors.beds && (
             <Text className='text-red-500 font-poppins-regular text-sm'>
               {errors.beds.message}
+            </Text>
+          )}
+          {validationErrors.beds && (
+            <Text className='text-red-500 font-poppins-regular text-sm'>
+              {validationErrors.beds}
             </Text>
           )}
         </View>
@@ -216,6 +213,11 @@ const StepTwo = () => {
               {errors.area.message}
             </Text>
           )}
+          {validationErrors.area && (
+            <Text className='text-red-500 font-poppins-regular text-sm'>
+              {validationErrors.area}
+            </Text>
+          )}
         </View>
 
         {/* Property Address Field */}
@@ -239,6 +241,11 @@ const StepTwo = () => {
           {errors.address && (
             <Text className='text-red-500 font-poppins-regular text-sm'>
               {errors.address.message}
+            </Text>
+          )}
+          {validationErrors.address && (
+            <Text className='text-red-500 font-poppins-regular text-sm'>
+              {validationErrors.address}
             </Text>
           )}
         </View>
@@ -269,20 +276,11 @@ const StepTwo = () => {
             {errors.description.message}
           </Text>
         )}
-      </View>
-
-      {/* Submit Button */}
-      <View>
-        <TouchableOpacity
-          className='bg-primary-300 p-2 rounded-lg m-4 flex-1 flex-row justify-center items-center gap-4'
-          onPress={handleSubmit(onSubmit)}
-        >
-          <MaterialIcons name='real-estate-agent' size={24} color='white' />
-
-          <Text className='text-white font-poppins-regular text-lg text-center'>
-            Create Property
+        {validationErrors.description && (
+          <Text className='text-red-500 font-poppins-regular text-sm'>
+            {validationErrors.description}
           </Text>
-        </TouchableOpacity>
+        )}
       </View>
     </View>
   );

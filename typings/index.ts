@@ -104,3 +104,15 @@ export type NewMessage = {
   room: string;
   status: "sent" | "unsent" | "read" | "unread";
 };
+
+export type Amenity = {
+  id: number;
+  name: string;
+  icon: string;
+  iconSet:
+    | "MaterialIcons"
+    | "FontAwesome"
+    | "Ionicons"
+    | "MaterialCommunityIcons"
+    | "Feather";
+};
