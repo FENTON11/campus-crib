@@ -7,8 +7,8 @@ const favorites = () => {
   interface House{
     id:string;
     title:string;
-    price:string;
-    image:string;
+    price:number;
+    image: string;
     location:string;
   }
   const [favorites, setFavorites] = useState<House[]>([])
@@ -49,7 +49,14 @@ const favorites = () => {
   }
   const renderHouse = ({ item }: { item: House }) => (
     <View className="bg-white p-4 rounded-lg shadow-md mb-3 flex-row items-center">
-      <Image source={{ uri: item.image }} className="w-24 h-24 rounded-md mr-4" />
+     <Image
+      source={
+        item.image && typeof item.image === "string"
+          ? { uri: item.image }
+          : require("@/assets/images/default-house.jpg") // Use a fallback image
+      }
+      className="w-24 h-24 rounded-md mr-4"
+    />
       <View className="flex-1">
         <Text className="text-lg font-rubik-semibold">{item.title}</Text>
         <Text className="text-gray-600">{item.location}</Text>
@@ -76,7 +83,7 @@ const favorites = () => {
         renderHiddenItem={({item})=>(
           <TouchableOpacity
           onPress={()=> removeFavorite(item.id)}
-          className='bg-red-500  px-5 items-end rounded-r-lg flex-1 justify-center'
+          className='bg-primary-300 px-5 items-end rounded-r-lg flex-1 justify-center'
           >
            <FontAwesome5 name="trash" size={24} color="white" />
           </TouchableOpacity>

@@ -3,7 +3,7 @@ import { Image, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import icons from "@/constants/icons";
-
+import defaultHouse from "@/assets/images/default-house.jpg";
 interface HeartIcon {
    house: {
     id: string;
@@ -39,13 +39,20 @@ const HeartIcon = ({ house, onFavoriteChange }: HeartIcon) => {
     try {
       const storedFavorites = await AsyncStorage.getItem("favorites");
       let favorites = storedFavorites ? JSON.parse(storedFavorites) : [];
+      const newHouse = {
+        id: house.id,
+        title: house.title,
+        price: house.price,
+        location: house.location,
+        image: house.image ? house.image : defaultHouse,
+      };
 
       if (isFavorite) {
         // Remove from favorites
         favorites = favorites.filter((fav: any) => fav.id !== house.id);
       } else {
         // Add to favorites
-        favorites.push(house);
+        favorites.push(newHouse);
       }
 
       await AsyncStorage.setItem("favorites", JSON.stringify(favorites));
