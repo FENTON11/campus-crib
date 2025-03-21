@@ -12,6 +12,7 @@ export type appwriteConfiguration = {
   appWriteMessegesCollectionID: string;
   appWriteRoomsCollectionID: string;
   appWritePlatform: string;
+  appwriteBookingsCollectionID: string;
 };
 export interface User extends Models.Document {
   name: string;
@@ -77,6 +78,13 @@ export interface Property extends Models.Document {
   gallery: string[];
   amenities?: string[];
   agent: Agent;
+}
+export interface Booking extends Models.Document {
+ visitDate: Date;
+ userId: string;
+ propertyId: string;
+ status: "pending" | "confirmed" | "cancelled";
+ 
 }
 
 export type Field = {

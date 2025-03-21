@@ -16,7 +16,8 @@ import images from "@/constants/images";
 import Comment from "@/components/Comment";
 import { facilities } from "@/constants/data";
 import { appwriteService } from "@/appwrite/appwriteService";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+import BookingModal from "@/components/bookingModal";
 import { Property as IProperty} from "@/typings";
 
 const Property = () => {
@@ -26,6 +27,7 @@ const Property = () => {
   const [property, setProperty] = useState<IProperty | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -283,11 +285,19 @@ const Property = () => {
             </Text>
           </View>
 
-          <TouchableOpacity className="flex-1 flex flex-row items-center justify-center bg-primary-300 py-3 rounded-full shadow-md shadow-zinc-400">
+          <TouchableOpacity className="flex-1 flex flex-row items-center justify-center bg-primary-300 py-3 rounded-full shadow-md shadow-zinc-400"
+          onPress={() => setModalVisible(true)} 
+          >
             <Text className="text-white text-lg text-center font-rubik-bold">
               Book Now
             </Text>
           </TouchableOpacity>
+          {/* Booking Modal */}
+      <BookingModal
+        modalVisible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        propertyId={id || property?.id}
+      />
         </View>
       </View>
     </View>

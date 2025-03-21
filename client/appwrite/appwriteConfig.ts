@@ -26,4 +26,7 @@ export const appwriteConfig: appwriteConfiguration = {
   appWritePlatform: String(
     process.env.EXPO_PUBLIC_APPWRITE_PLATFORM
   ),
+  appwriteBookingsCollectionID: String(
+    process.env.EXPO_PUBLIC_APPWRITE_BOOKINGS_COLLECTION_ID
+  ),
 };

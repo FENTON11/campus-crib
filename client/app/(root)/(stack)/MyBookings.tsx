@@ -1,66 +1,96 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { 
+  View, Text, Image, FlatList, TouchableOpacity, Alert, ActivityIndicator 
+} from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { appwriteService } from "@/appwrite/appwriteService";
+import { authService } from "@/appwrite/authService";
+import { User } from "@/typings";
+
 
 interface Booking {
   id: string;
+  propertyId: string;
   title: string;
   image: string;
   location: string;
   price: number;
+  visitDate: string; 
 }
 
 const MyBookings = () => {
+  const [user, setUser] = useState<User| null>(null);
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  // Load bookings from AsyncStorage
+  // Load bookings from Appwrite
   useEffect(() => {
-    const loadBookings = async () => {
+    const fetchUser = async () => {
+      try{
+        const user = await authService.getUser();
+        setUser
+      }
+      catch(error){
+        console.error("Error fetching user:", error);
+      }
+    }
+    fetchUser();
+  }, []);
+  // fetch bookings for the logged in user
+  useEffect(() => {
+    const fetchBookings = async () => {
+      if (!user) return;
       try {
-        const storedBookings = await AsyncStorage.getItem("bookings");
-        if (storedBookings) {
-          setBookings(JSON.parse(storedBookings));
-        }
+        const userBookings = await appwriteService.getUserBookings(user.$id); // Fetch bookings
+        setBookings(userBookings.map((doc: any) => ({
+          id: doc.$id,
+          propertyId: doc.propertyId,
+          title: doc.title,
+          image: doc.image,
+          location: doc.location,
+          price: doc.price,
+          visitDate: doc.visitDate,
+        })));
       } catch (error) {
-        console.error("Error loading bookings:", error);
+        console.error("Error fetching bookings:", error);
+      } finally {
+        setLoading(false);
       }
     };
-    loadBookings();
-  }, []);
+    fetchBookings();
+  }, [user]);
 
-  // Save bookings to AsyncStorage
-  const saveBookings = async (newBookings: Booking[]) => {
-    try {
-      await AsyncStorage.setItem("bookings", JSON.stringify(newBookings));
-      setBookings(newBookings);
-    } catch (error) {
-      console.error("Error saving bookings:", error);
-    }
-  };
 
   // Cancel a booking
-  const cancelBooking = (id: string) => {
+  const cancelBooking = async (id: string) => {
     Alert.alert("Cancel Booking", "Are you sure you want to cancel this booking?", [
       { text: "No", style: "cancel" },
       {
         text: "Yes, Cancel",
-        onPress: () => {
-          const updatedBookings = bookings.filter((booking) => booking.id !== id);
-          saveBookings(updatedBookings);
+        onPress: async () => {
+          try {
+            await appwriteService.cancelBooking(id);
+            setBookings(bookings.filter((booking) => booking.id !== id));
+          } catch (error) {
+            console.error("Error canceling booking:", error);
+          }
         },
       },
     ]);
   };
 
-  // Render each booked house
+  // Render booked property
   const renderBooking = ({ item }: { item: Booking }) => (
     <View className="bg-white p-4 rounded-lg shadow-md mb-3 flex-row items-center">
-      <Image source={{ uri: item.image }} className="w-24 h-24 rounded-md mr-4" />
+      <Image 
+        source={{ uri: item.image || "https://via.placeholder.com/100" }} 
+        className="w-24 h-24 rounded-md mr-4" 
+      />
       <View className="flex-1">
         <Text className="text-lg font-bold">{item.title}</Text>
         <Text className="text-gray-600">{item.location}</Text>
         <Text className="text-primary-300 font-bold">${item.price} Total</Text>
+        <Text className="text-sm text-gray-500">Visit: {item.visitDate}</Text>
       </View>
       <TouchableOpacity onPress={() => cancelBooking(item.id)} className="p-2 bg-red-500 rounded-full">
         <FontAwesome5 name="trash" size={18} color="white" />
@@ -69,9 +99,11 @@ const MyBookings = () => {
   );
 
   return (
-    <View className="flex-1 bg-gray-200 p-4">
+    <View className="flex-1 bg-gray-100 p-4">
       <Text className="text-2xl font-bold mb-4">My Bookings</Text>
-      {bookings.length === 0 ? (
+      {loading ? (
+        <ActivityIndicator size="large" color="#ff014f" />
+      ) : bookings.length === 0 ? (
         <View className="flex-1 items-center justify-center">
           <FontAwesome5 name="calendar-times" size={48} color="gray" />
           <Text className="text-gray-600 mt-4">No bookings yet.</Text>

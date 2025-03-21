@@ -312,6 +312,49 @@ class AppWriteService {
       throw new Error("Failed to get property");
     }
   }
+  async bookVisit(userId: string, propertyId: string,visitDate:Date) {
+    try {
+      const res = await this.database.createDocument(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appwriteBookingsCollectionID,
+        ID.unique(),
+        {
+          userId,
+          propertyId,
+          visitDate: visitDate.toISOString(),
+          status: "pending",
+        }
+      );
+      return res;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to book a visit.");
+    }
+
+  }
+  async getUserBookings(userId: string) {
+    try {
+      const res = await this.database.listDocuments(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appwriteBookingsCollectionID,
+        [Query.equal("userId", userId)]
+      );
+      return res.documents;
+    } catch (error) {
+      throw new Error("Failed to fetch bookings");
+    }
+  }
+  async cancelBooking(bookingId: string) {
+    try {
+      await this.database.deleteDocument(
+        appwriteConfig.appWriteDatabase,
+        appwriteConfig.appwriteBookingsCollectionID,
+        bookingId
+      );
+    } catch (error) {
+      throw new Error("Failed to cancel booking");
+    }
+  }
 }
 
 export const appwriteService = new AppWriteService();
