@@ -17,12 +17,13 @@ import Comment from "@/components/Comment";
 import { facilities } from "@/constants/data";
 import { appwriteService } from "@/appwrite/appwriteService";
 import { useState,useEffect } from "react";
+import { Property as IProperty} from "@/typings";
 
 const Property = () => {
   const { id } = useLocalSearchParams<{ id?: string }>();
   const windowHeight = Dimensions.get("window").height;
 
-  const [property, setProperty] = useState<any>(null);
+  const [property, setProperty] = useState<IProperty | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -55,14 +56,11 @@ const Property = () => {
       >
         <View className="relative w-full" style={{ height: windowHeight / 2 }}>
           <Image
-            source={{ uri: property?.image }}
+            source={{ uri: property?.image.toString() }}
             className="size-full"
             resizeMode="cover"
           />
-          <Image
-            source={images.whiteGradient}
-            className="absolute top-0 w-full z-40"
-          />
+          {/* Removed the invalid Image component */}
 
           <View
             className="z-50 absolute inset-x-7"
@@ -105,7 +103,7 @@ const Property = () => {
             <View className="flex flex-row items-center gap-2">
               <Image source={icons.star} className="size-5" />
               <Text className="text-black-200 text-sm mt-1 font-rubik-medium">
-                {property?.rating} ({property?.reviews.length} reviews)
+                {property?.rating} ({property?.reviews} reviews)
               </Text>
             </View>
           </View>
@@ -174,7 +172,7 @@ const Property = () => {
               Facilities
             </Text>
 
-            {property?.facilities.length > 0 && (
+            {property?.amenities && property?.amenities.length > 0 && (
               <View className="flex flex-row flex-wrap items-start justify-start mt-2 gap-5">
                 {property?.facilities.map((item: string, index: number) => {
                   const facility = facilities.find(
@@ -207,7 +205,7 @@ const Property = () => {
             )}
           </View>
 
-          {property?.gallery.length > 0 && (
+          {property?.gallery && property.gallery.length > 0 && (
             <View className="mt-7">
               <Text className="text-black-300 text-xl font-rubik-bold">
                 Gallery
@@ -215,12 +213,12 @@ const Property = () => {
               <FlatList
                 contentContainerStyle={{ paddingRight: 20 }}
                 data={property?.gallery}
-                keyExtractor={(item) => item.$id}
+                keyExtractor={(item) => item.toString()}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
                   <Image
-                    source={{ uri: item.image }}
+                    source={{ uri: item }}
                     className="size-40 rounded-xl"
                   />
                 )}
@@ -246,7 +244,7 @@ const Property = () => {
             />
           </View>
 
-          {property?.reviews.length > 0 && (
+          {/* {property?.reviews.length > 0 && (
             <View className="mt-7">
               <View className="flex flex-row items-center justify-between">
                 <View className="flex flex-row items-center">
@@ -267,7 +265,7 @@ const Property = () => {
                 <Comment item={property?.reviews[0]} />
               </View>
             </View>
-          )}
+          )} */}
         </View>
       </ScrollView>
 

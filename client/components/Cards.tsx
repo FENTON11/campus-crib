@@ -11,7 +11,7 @@ interface Props {
   onPress?: () => void;
 }
 
-export const FeaturedCard = ({ price, name, location, $id }: Property & { $id: string }) => {
+export const FeaturedCard = ({ price, name, location,image, $id }: Property & { $id: string }) => {
   const onPress = () => {};
   return (
     <TouchableOpacity
@@ -20,7 +20,7 @@ export const FeaturedCard = ({ price, name, location, $id }: Property & { $id: s
       className='flex flex-col items-start
     w-64 h-72 relative'
     >
-      <Image source={images.japan} className='size-full rounded-2xl' />
+      <Image source={{uri:image.toString()}} className='size-full rounded-2xl' />
       <Image
         source={images.cardGradient}
         className='size-full rounded-2xl absolute bottom-0'
@@ -39,7 +39,7 @@ export const FeaturedCard = ({ price, name, location, $id }: Property & { $id: s
           <Text className='text-xl font-rubik-extrabold text-white'>
             $ {price}
           </Text>
-          <HeartIcon house={{ id: $id, title: name, price, location, image: images.japan }} />
+          <HeartIcon house={{ id: $id, title: name, price, location, image }} />
           {/* <Image source={icons.heart} className='size-8' /> */}
         </View>
       </View>
@@ -56,6 +56,7 @@ export const Card = ({
   location,
   $id,
   showMore,
+  image,
   agent,
 }: CardProps) => {
   const router = useRouter();
@@ -80,7 +81,7 @@ export const Card = ({
           4.4
         </Text>
       </View>
-      <Image source={images.newYork} className='w-full h-40 rounded-lg' />
+      <Image source={{uri:image.toString()}} className='w-full h-40 rounded-lg' />
       <View className='flex flex-col mt-2'>
         <Text className='text-base font-rubik-bold text-black-300'>{name}</Text>
 
@@ -89,7 +90,7 @@ export const Card = ({
           <Text className='text-base font-rubik-bold text-primary-300'>
             $ {price}
           </Text>
-          <HeartIcon house={{ id: $id, title: name, price, location, image: images.newYork }} />
+          <HeartIcon house={{ id: $id, title: name, price, location, image}} />
           {/* <Image source={icons.heart} className='size-8' /> */}
         </View>
         {show && (
