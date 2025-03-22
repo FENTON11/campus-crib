@@ -15,7 +15,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.fenton.CampusCrib"
     },
     "web": {
       "bundler": "metro",
@@ -42,7 +46,7 @@
             "./assets/fonts/Rubik-Medium.ttf",
             "./assets/fonts/Rubik-Light.ttf",
             "./assets/fonts/Rubik-Regular.ttf",
-            "./assets/fonts/Rubik-semiBold.ttf"
+            "./assets/fonts/Rubik-SemiBold.ttf"
           ]
         }
       ],
@@ -55,6 +59,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "1288b53e-2331-41c3-9ebb-16cb3021267e"
+      }
+    },
+    "owner": "fenton"
   }
 }
