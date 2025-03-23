@@ -1,4 +1,4 @@
-import { View, Text, Modal, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import React, { useState } from 'react';
 import DatePicker from 'expo-datepicker';
 import moment from 'moment';
@@ -16,7 +16,24 @@ const BookingModal: React.FC<BookingModalProps> = ({ modalVisible, onClose, prop
   const [error, setError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const handleConfirmBooking = async () => {
+  const handleDateChange = (date: Date) => {
+    // console.log("🚀 handleDateChange triggered with:", date);
+  
+    if (isNaN(date.getTime())) {
+      Alert.alert("Date Error", "Invalid date selected. Please try again.");
+      return;
+    }
+  
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Normalize time for accurate comparison
+  
+    if (date >= today) {
+      setSelectedDate(date);
+    } else {
+      Alert.alert("Date Error", "You can't select a past date.");
+    }
+  };
+const handleConfirmBooking = async () => {
     setLoading(true);
     setError(null);
     try {
@@ -25,11 +42,13 @@ const BookingModal: React.FC<BookingModalProps> = ({ modalVisible, onClose, prop
         setError('You need to log in to book a visit');
         return;
       }
+      // Add booking to the database
       await appwriteService.bookVisit(user.$id, propertyId, selectedDate);
       onClose();
-      alert('Booking successful! The agent will contact you soon.');
+      Alert.alert('Booking successful!', 'The agent will contact you soon.');
     } catch (err) {
-      setError('Failed to book visit. Please try again later.');
+      const error = err as Error;
+      Alert.alert('Error:', error.message);
     } finally {
       setLoading(false);
     }
@@ -44,16 +63,31 @@ const BookingModal: React.FC<BookingModalProps> = ({ modalVisible, onClose, prop
 
           {/* Date Picker Component */}
           <DatePicker
-            date={selectedDate.toISOString()}
-            onChange={(date) => {
-              if (date && new Date(date) >= new Date()) {
-                setSelectedDate(new Date(date));
-              } else {
-                alert('Please select a valid future date.');
-              }
-            }}
-          />
+            date={selectedDate.toISOString().split("T")[0]} // Format as "YYYY-MM-DD"
+             onChange={(dateString) => {
+            //  console.log("Raw date from picker:", dateString);
 
+             if (dateString) {
+              // Replace slashes with hyphens
+                const formattedDateString = dateString.replace(/\//g, "-");
+                //  console.log("Formatted date string:", formattedDateString);
+
+                const parsedDate = new Date(formattedDateString);
+                //    console.log("Parsed selected date:", parsedDate);
+
+                   if (!isNaN(parsedDate.getTime())) {
+                    handleDateChange(parsedDate);
+               } else {
+                   Alert.alert("Date Error", "Invalid date selected. Please try again.");
+                }
+                } else {
+                 Alert.alert("Date Error", "Date is undefined.");
+               }
+             }}
+            />
+
+         
+          
           <Text className="mt-3 text-lg">{moment(selectedDate).format('MMMM D, YYYY')}</Text>
 
           {error && <Text className="text-red-500 mt-2">{error}</Text>}

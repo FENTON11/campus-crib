@@ -107,7 +107,7 @@ const Profile = () => {
             </TouchableOpacity>
           </TouchableOpacity>
         </Link>
-        <Link asChild href={"/(root)/(stack)/myBooking"}>
+        <Link asChild href={"/(root)/(stack)/MyBookings"}>
           <TouchableOpacity
             activeOpacity={0.8}
             className=' bg-gray-3 p2 rounded-lg flex-row items-center gap-4'
@@ -121,7 +121,7 @@ const Profile = () => {
             </TouchableOpacity>
           </TouchableOpacity>
         </Link>
-        <Link asChild href={"/(root)/(stack)/notifications"}>
+        <Link asChild href={"/(root)/(stack)/Notification"}>
           <TouchableOpacity
             activeOpacity={0.8}
             className=' bg-gray-3 p2 rounded-lg flex-row items-center gap-4'
@@ -169,7 +169,7 @@ const Profile = () => {
             </TouchableOpacity>
           </Link>
         )}
-        <Link asChild href={"/(root)/(stack)/notifications"}>
+        <Link asChild href={"/(root)/(tabs)/roommate"}>
           <TouchableOpacity
             activeOpacity={0.8}
             className=' bg-gray-3 p2 rounded-lg flex-row items-center gap-4'
