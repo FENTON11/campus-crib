@@ -107,7 +107,6 @@ export const schema = z.object({
   price: z
     .number({ message: "Property price is required" })
     .min(1, "Property price cannot be less than 1"),
-  location: z.string({ message: "Property location is required" }),
   bathrooms: z.number({ message: "Property bathrooms is required" }),
   beds: z
     .number({ message: "Property beds is required" })
@@ -115,9 +114,12 @@ export const schema = z.object({
     .max(100, "Property beds cannot be more than 100"),
   area: z
     .number({ message: "Property area is required" })
-    .min(0, "Property area cannot be less than 0")
-    .max(20, "Property area cannot be more than 20"),
+    .min(0, "Property area cannot be less than 0"),
   address: z
+    .string({ message: "Property address is required" })
+    .min(3, "Property address cannot be less than 3 characters")
+    .max(2200, "Property address cannot be more than 2200 characters"),
+  code: z
     .string({ message: "Property address is required" })
     .min(3, "Property address cannot be less than 3 characters")
     .max(2200, "Property address cannot be more than 2200 characters"),

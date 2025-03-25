@@ -25,18 +25,18 @@ const Create = () => {
   const handleNext = () => {
     try {
       if (step === 1 && images.length < 3) {
-        throw new Error("Select at least 3 images");
+        // throw new Error("Select at least 3 images");
       }
       if (step === 2) {
         const result = schema.safeParse(stepTwoData);
-        // if (!result.success) {
-        //   const errors = result.error.errors.reduce((acc, err) => {
-        //     acc[err.path.join(".")] = err.message;
-        //     return acc;
-        //   }, {} as { [key: string]: string });
-        //   setValidationErrors(errors);
-        //   throw new Error("Please fill out all required fields correctly");
-        // }
+        if (!result.success) {
+          const errors = result.error.errors.reduce((acc, err) => {
+            acc[err.path.join(".")] = err.message;
+            return acc;
+          }, {} as { [key: string]: string });
+          setValidationErrors(errors);
+          throw new Error("Please fill out all required fields correctly");
+        }
       }
       setStep((prev) => prev + 1);
       setValidationErrors({}); // Clear validation errors when moving to the next step
@@ -52,8 +52,8 @@ const Create = () => {
   };
 
   const handleStepTwoSubmit = (data: z.infer<typeof schema>) => {
-    setStepTwoData(data); // Save StepTwo form data
-    handleNext(); // Proceed to the next step
+    setStepTwoData(data);
+    handleNext();
   };
 
   const handleSubmit = () => {
@@ -74,6 +74,8 @@ const Create = () => {
         <StepOne images={images} setImages={setImages} />
       ) : step === 2 ? (
         <StepTwo
+          step={step}
+          handlePrev={handlePrev}
           onSubmit={handleStepTwoSubmit}
           validationErrors={validationErrors}
         />
@@ -84,26 +86,28 @@ const Create = () => {
           onSubmit={handleSubmit}
         />
       )}
-      <View className='flex-row justify-between p-4 items-center'>
-        <TouchableOpacity
-          onPress={handlePrev}
-          activeOpacity={0.3}
-          className={`py-2 px-4 rounded-lg ${
-            step > 1 ? "bg-primary-300" : "bg-gray-300"
-          }`}
-        >
-          <Text className='font-rubik-semibold text-white'>PREV</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handleNext}
-          activeOpacity={0.3}
-          className={`py-2 px-4 rounded-lg ${
-            step <= 2 ? "bg-primary-300" : "bg-gray-300"
-          }`}
-        >
-          <Text className='font-rubik-semibold text-white'>NEXT</Text>
-        </TouchableOpacity>
-      </View>
+      {step !== 2 && (
+        <View className='flex-row justify-between p-4 items-center'>
+          <TouchableOpacity
+            onPress={handlePrev}
+            activeOpacity={0.3}
+            className={`py-2 px-4 rounded-lg ${
+              step > 1 ? "bg-primary-300" : "bg-gray-300"
+            }`}
+          >
+            <Text className='font-rubik-semibold text-white'>PREV</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleNext}
+            activeOpacity={0.3}
+            className={`py-2 px-4 rounded-lg ${
+              step <= 2 ? "bg-primary-300" : "bg-gray-300"
+            }`}
+          >
+            <Text className='font-rubik-semibold text-white'>NEXT</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </ScrollView>
   );
 };

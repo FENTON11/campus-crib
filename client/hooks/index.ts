@@ -1,6 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { Alert, Platform, ToastAndroid } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import {
+  Country,
+  State,
+  City,
+  ICountry,
+  IState,
+  ICity,
+} from "country-state-city";
 // Define the type for the image picker asset
 type ImagePickerAsset = ImagePicker.ImagePickerAsset;
 
@@ -60,4 +68,104 @@ export const useCustomFetch = <T>(
   }, [getData]);
 
   return { loading, data, refetch: getData };
+};
+
+interface StateType {
+  isoCode: string;
+  name: string;
+  countryCode: string;
+}
+
+interface CityType {
+  name: string;
+  stateCode: string;
+  countryCode: string;
+}
+
+interface LocationHook {
+  countries: ICountry[];
+  getCountryByCode: (countryCode: string) => ICountry | undefined;
+  getStateByCode: (countryCode: string, stateCode: string) => StateType | null;
+  getCountryStates: (countryCode: string) => IState[];
+  getCityByName: (
+    countryCode: string,
+    stateCode: string,
+    name: string
+  ) => CityType | null;
+  getStatesCities: (countryCode: string, stateCode: string) => ICity[];
+}
+
+export const useLocation = (): LocationHook => {
+  const getCountryByCode = useCallback(
+    (countryCode: string): ICountry | undefined => {
+      return Country.getAllCountries().find(
+        (country) => country.isoCode === countryCode
+      );
+    },
+    []
+  );
+
+  const getStateByCode = useCallback(
+    (countryCode: string, stateCode: string): StateType | null => {
+      const state = State.getAllStates().find(
+        (state) =>
+          state.isoCode === stateCode && state.countryCode === countryCode
+      );
+      if (!state) return null;
+      return state;
+    },
+    []
+  );
+
+  const getCityByName = useCallback(
+    (countryCode: string, stateCode: string, name: string): CityType | null => {
+      const city = City.getAllCities().find(
+        (city) =>
+          city.countryCode === countryCode &&
+          city.stateCode === stateCode &&
+          city.name === name
+      );
+      if (!city) return null;
+      return city;
+    },
+    []
+  );
+
+  const getCountryStates = useCallback((countryCode: string): StateType[] => {
+    return State.getAllStates().filter(
+      (state) => state.countryCode === countryCode
+    );
+  }, []);
+
+  const getStatesCities = useCallback(
+    (countryCode: string, stateCode: string): CityType[] => {
+      return City.getAllCities().filter(
+        (item) =>
+          item.countryCode === countryCode && item.stateCode === stateCode
+      );
+    },
+    []
+  );
+
+  const getCountriesStatesCities = (): {
+    value: string;
+    label: string;
+    type: string;
+  }[] => {
+    const cities = City.getAllCities().map((city) => ({
+      value: city.name,
+      label: `${city.name} (City)`,
+      type: "city",
+    }));
+    return cities;
+  };
+
+  return {
+    countries: Country.getAllCountries(),
+    getCountryByCode,
+    getStateByCode,
+    getCountryStates,
+    getCityByName,
+    getStatesCities,
+  };
 };
