@@ -5,13 +5,13 @@ import { useNavigation } from "@react-navigation/native";
 import icons from "@/constants/icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
-
+import FilterModal from "./FilterModal";
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const { searchTerm } = useLocalSearchParams();
   const [debouncedSearchQuery] = useDebounce(searchQuery, 500);
   const router = useRouter();
-
+  const [modalVisible, setModalVisible] = useState(false);
   const handleSearch = () => {
     router.push({
       pathname: "/search",
@@ -50,7 +50,7 @@ const Search = () => {
           <AntDesign name='closecircle' size={22} color='#8C8E98' />
         </TouchableOpacity>
       )}
-     { <TouchableOpacity onPress={handleSearch}>
+     { <TouchableOpacity onPress={() => setModalVisible(true)}>
         <Image source={icons.filter} className='size-7' />
       </TouchableOpacity>}
     </View>

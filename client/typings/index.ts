@@ -87,7 +87,23 @@ export interface Booking extends Models.Document {
  status: "pending" | "confirmed" | "cancelled";
  
 }
-
+export interface FilterModal extends Models.Document {
+ visible: boolean;
+   onClose: () => void;
+   onApplyFilters: (filters: {
+     priceRange: number;
+     location: string;
+     bedrooms: number;
+     bathrooms: number;
+     propertyType: string;
+     furnished: boolean;
+     petFriendly: boolean;
+     parking: boolean;
+     security: boolean;
+     roommatesAllowed: boolean;
+   }) => void;
+   onReset: () => void;
+}
 export type Field = {
   name: string;
   type: "string" | "number" | "boolean" | "array" | "date" | "file";
