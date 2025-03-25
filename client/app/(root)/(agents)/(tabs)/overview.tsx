@@ -30,7 +30,7 @@ const AgentsDashboard = () => {
               </View>
             </View>
             <View className=' flex-row gap-4 items-center'>
-              <Link asChild href={"/(root)/(stack)/notifications"}>
+              <Link asChild href={"/(root)/(stack)/Notification"}>
                 <TouchableOpacity>
                   <Image source={icons.bell} className=' size-7' />
                 </TouchableOpacity>
