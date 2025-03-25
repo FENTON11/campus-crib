@@ -63,6 +63,7 @@ export interface Property extends Models.Document {
   featured: boolean;
   bathrooms: number;
   address: string;
+  booked: boolean;
   area: number;
   type:
     | "Apartment"
@@ -135,4 +136,11 @@ export interface INotification {
   id: string;
   read: boolean;
   createAt: Date;
+}
+
+export interface Booking extends Models.Document {
+  user:User,
+  property: Property;
+  visitDate: Date; 
+  status: "pending" | "confirmed" | "cancelled";
 }

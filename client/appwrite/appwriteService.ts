@@ -15,6 +15,7 @@ import {
   singleMessageFormatter,
   userFormatter,
   usersFormatter,
+  bookingsFormatter
 } from "@/lib";
 import { authService } from "./authService";
 import { NewMessage } from "@/typings";
@@ -319,16 +320,15 @@ class AppWriteService {
         appwriteConfig.appwriteBookingsCollectionID,
         ID.unique(),
         {
-          userId,
-          propertyId,
+         user: userId,
+         property: propertyId,
           visitDate: visitDate.toISOString(),
-          status: "pending",
         }
       );
       return res;
     } catch (error) {
-      console.error(error);
-      throw new Error("Failed to book a visit.");
+      const err =error as Error;
+      throw new Error(err?.message ||"Failed to book a visit.");
     }
 
   }
@@ -337,11 +337,12 @@ class AppWriteService {
       const res = await this.database.listDocuments(
         appwriteConfig.appWriteDatabase,
         appwriteConfig.appwriteBookingsCollectionID,
-        [Query.equal("userId", userId)]
+        [Query.equal("user", userId)]
       );
-      return res.documents;
+      return bookingsFormatter(res.documents);
     } catch (error) {
-      throw new Error("Failed to fetch bookings");
+      const err =error as Error;
+      throw new Error(err?.message ||"Failed to fetch bookings");
     }
   }
   async cancelBooking(bookingId: string) {
@@ -352,7 +353,8 @@ class AppWriteService {
         bookingId
       );
     } catch (error) {
-      throw new Error("Failed to cancel booking");
+      const err =error as Error;
+      throw new Error(err?.message ||"Failed to cancel booking");
     }
   }
 }

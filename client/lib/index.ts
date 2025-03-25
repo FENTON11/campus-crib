@@ -1,4 +1,4 @@
-import { IChatRoom, IMessege, Property, User } from "@/typings";
+import { IChatRoom, IMessege, Property, User,Booking } from "@/typings";
 import { Models } from "react-native-appwrite";
 import * as SecureStore from "expo-secure-store";
 
@@ -106,6 +106,22 @@ export const chatRoomsFormatter = (docs: Models.Document[]): IChatRoom[] => {
     $permissions: doc?.$permissions,
   }));
 };
+export const bookingsFormatter = (docs: Models.Document[]): Booking[] => {
+  return docs.map((doc) => ({
+    status: doc?.status,
+    user: doc?.user,
+    property: doc?.property,
+    visitDate: doc?.visitDate,
+    userId: doc?.userId,
+    propertyId: doc?.propertyId,
+    $id: doc?.$id,
+    $collectionId: doc?.$collectionId,
+    $databaseId: doc?.$databaseId,
+    $createdAt: doc?.$createdAt,
+    $updatedAt: doc?.$updatedAt,
+    $permissions: doc?.$permissions,
+  }));
+};
 export const messagesFormatter = (docs: Models.Document[]): IMessege[] => {
   return docs.map((doc) => ({
     text: doc?.text,
@@ -152,6 +168,7 @@ export const propertyFormatter = (doc: Models.Document): Property => {
     price: doc?.price,
     featured: doc?.featured,
     address: doc?.address,
+    booked: doc?.booked,
     description: doc?.description,
     $id: doc?.$id,
     $collectionId: doc?.$collectionId,
@@ -174,6 +191,7 @@ export const propertiesFormatter = (docs: Models.Document[]): Property[] => {
     area: doc?.area,
     price: doc?.price,
     featured: doc?.featured,
+    booked: doc?.booked,
     address: doc?.address,
     description: doc?.description,
     $id: doc?.$id,

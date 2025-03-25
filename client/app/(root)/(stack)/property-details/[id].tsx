@@ -285,13 +285,13 @@ const Property = () => {
             </Text>
           </View>
 
-          <TouchableOpacity className="flex-1 flex flex-row items-center justify-center bg-primary-300 py-3 rounded-full shadow-md shadow-zinc-400"
+    { property?.booked ? <Text>property is already booked</Text>  :     <TouchableOpacity  className="flex-1 flex flex-row items-center justify-center bg-primary-300 py-3 rounded-full shadow-md shadow-zinc-400"
           onPress={() => setModalVisible(true)} 
           >
             <Text className="text-white text-lg text-center font-rubik-bold">
               Book Now
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
           {/* Booking Modal */}
       <BookingModal
         modalVisible={modalVisible}
