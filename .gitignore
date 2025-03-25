@@ -57,3 +57,4 @@ socket/*.pem
 # TypeScript (if applicable)
 client/*.tsbuildinfo
 socket/*.tsbuildinfo
+node_modules
