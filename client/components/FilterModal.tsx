@@ -4,12 +4,12 @@ import Slider from "@react-native-community/slider"
 import { Picker } from '@react-native-picker/picker'
 import { Ionicons } from '@expo/vector-icons'
 
-import { FilterModal } from '@/typings'
+import { FilterModal as IFilterModel } from '@/typings'
 
   
 
 
-const FilterModal: React.FC<FilterModal> = ({ visible, onClose, onApplyFilters, onReset }) => {
+const FilterModal: React.FC<IFilterModel> = ({ visible, onClose, onApplyFilters, onReset }) => {
     const [priceRange,setPriceRange] = useState(5000);
     const [location,setLocation] = useState("");
     const [bedrooms,setBedrooms] = useState(1);
