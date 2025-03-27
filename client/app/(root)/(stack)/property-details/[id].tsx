@@ -18,7 +18,7 @@ import { appwriteService } from "@/appwrite/appwriteService";
 import { useState, useEffect } from "react";
 import BookingModal from "@/components/bookingModal";
 import { Property as IProperty } from "@/typings";
-import MyMap from "@/components/Map";
+// import MyMap from "@/components/Map";
 
 const Property = () => {
   const { id } = useLocalSearchParams<{ id?: string }>();
@@ -239,9 +239,9 @@ const Property = () => {
               </Text>
             </View>
 
-            <View className=' w-full h-96'>
+            {/* <View className=' w-full h-96'>
               <MyMap />
-            </View>
+            </View> */}
           </View>
         </View>
       </ScrollView>
