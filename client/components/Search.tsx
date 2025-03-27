@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, Image, TextInput, TouchableOpacity, Modal } from "react-native";
 import { useDebounce } from "use-debounce";
 import { useNavigation } from "@react-navigation/native";
 import icons from "@/constants/icons";
@@ -53,6 +53,14 @@ const Search = () => {
      { <TouchableOpacity onPress={() => setModalVisible(true)}>
         <Image source={icons.filter} className='size-7' />
       </TouchableOpacity>}
+
+      {/* Filter Modal */}
+      <FilterModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onApplyFilters={() => {}}
+        onReset={() => {}}
+      />
     </View>
   );
 };
