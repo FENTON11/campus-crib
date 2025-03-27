@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { Alert, Platform, ToastAndroid } from "react-native";
+import { Alert, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 import {
   Country,
   State,
@@ -147,19 +148,6 @@ export const useLocation = (): LocationHook => {
     []
   );
 
-  const getCountriesStatesCities = (): {
-    value: string;
-    label: string;
-    type: string;
-  }[] => {
-    const cities = City.getAllCities().map((city) => ({
-      value: city.name,
-      label: `${city.name} (City)`,
-      type: "city",
-    }));
-    return cities;
-  };
-
   return {
     countries: Country.getAllCountries(),
     getCountryByCode,
@@ -168,4 +156,20 @@ export const useLocation = (): LocationHook => {
     getCityByName,
     getStatesCities,
   };
+};
+export const useNetworkState = () => {
+  const [networkState, setNetworkState] = useState<NetInfoState | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setNetworkState(state);
+    });
+
+    // Cleanup subscription on unmount
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  return networkState;
 };
