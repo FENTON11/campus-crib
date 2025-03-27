@@ -58,3 +58,5 @@ socket/*.pem
 client/*.tsbuildinfo
 socket/*.tsbuildinfo
 node_modules
+/ios
+/android
