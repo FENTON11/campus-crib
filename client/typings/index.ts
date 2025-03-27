@@ -87,7 +87,7 @@ export interface Booking extends Models.Document {
  status: "pending" | "confirmed" | "cancelled";
  
 }
-export interface FilterModal extends Models.Document {
+export interface FilterModal{
  visible: boolean;
    onClose: () => void;
    onApplyFilters: (filters: {
