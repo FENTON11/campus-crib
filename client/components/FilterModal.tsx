@@ -23,8 +23,8 @@ const FilterModal: React.FC<IFilterModel> = ({ visible, onClose, onApplyFilters,
 
   return (
     <Modal visible={visible} animationType='slide' transparent onRequestClose={onClose}>
-     <View className='flex-1 justify-center bg-white'>
-        <View className='bg-white p-6 w-4/5 rounded-lg self-center'> 
+     <View className='flex-1 justify-center bg-slate-200'>
+        <View className='bg-white p-6 w-4/5 rounded-3xl self-center'> 
          {/* Header */}
             <View className='flex flex-row justify-between'>
                 <TouchableOpacity onPress={onClose}>
@@ -50,7 +50,7 @@ const FilterModal: React.FC<IFilterModel> = ({ visible, onClose, onApplyFilters,
                 <Text className='text-center'>${priceRange}</Text>
 
                 {/* Location */}
-                <Text className='mt-4 font-rubik-semibold'>Location</Text>
+                <Text className='mt-4  font-rubik-semibold'>Location</Text>
                 <Picker selectedValue={location} onValueChange={(value) => setLocation(value)}>
                     <Picker.Item label='Nairobi' value='Nairobi' />
                     <Picker.Item label='Mombasa' value='Mombasa' />
@@ -59,13 +59,13 @@ const FilterModal: React.FC<IFilterModel> = ({ visible, onClose, onApplyFilters,
                 </Picker>
                 
                 {/* Bedrooms  & Bathrooms*/}
-                <Text className='mt-4 font-rubik-semibold'>Bedrooms</Text>
+                <Text className='mt-4  font-rubik-semibold'>Bedrooms</Text>
                 <Picker selectedValue={bedrooms} onValueChange={(value) => setBedrooms(value)}>
                     {[1,2,3,4,5].map((num) => (
                         <Picker.Item key={num} label={`${num}`} value={num}/>
                     ))}
                 </Picker>
-                <Text className='mt-4 font-rubik-semibold'>Bathrooms</Text>
+                <Text className='mt-4  font-rubik-semibold'>Bathrooms</Text>
                 <Picker selectedValue={bathrooms} onValueChange={(value) => setBathrooms(value)}>
                     {[1,2,3,4,5].map((num) => (
                         <Picker.Item key={num} label={`${num}`} value={num}/>
@@ -73,7 +73,7 @@ const FilterModal: React.FC<IFilterModel> = ({ visible, onClose, onApplyFilters,
                 </Picker>
 
                 {/* Property Type*/}
-                <Text className='mt-4 font-rubik-semibold'>Property Type</Text>
+                <Text className='mt-4  font-rubik-semibold'>Property Type</Text>
                 <Picker selectedValue={propertyType} onValueChange={(value) => setPropertyType(value)}>
                   <Picker.Item label='Apartment' value='Apartment' />
                   <Picker.Item label='Condos' value='Condos' />
@@ -104,7 +104,7 @@ const FilterModal: React.FC<IFilterModel> = ({ visible, onClose, onApplyFilters,
 
             {/* Apply Filters Button */}
           <TouchableOpacity onPress={() => onApplyFilters({ priceRange, location, bedrooms, bathrooms, propertyType, furnished, petFriendly, parking, security, roommatesAllowed })} 
-           className="mt-4 bg-primary-300 p-3 rounded-lg">
+           className="mt-4 bg-primary-300 p-3 rounded-3xl">
             <Text className="text-white text-center font-rubik-bold">Set Filters</Text>
           </TouchableOpacity>
         </View>
